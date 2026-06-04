@@ -1,0 +1,197 @@
+<div class="container my-5">
+
+  @if(carregando === true) {
+    <div class="d-flex justify-content-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+      <span class="ms-3 h5 align-self-center text-muted">
+        Carregando os dados da conta...
+      </span>
+    </div>
+  }
+  @if(erroMensagem) {
+    <div class="alert alert-danger shadow-sm d-flex align-items-center" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      <div>{{ erroMensagem }}</div>
+    </div>
+  }
+  
+  @if(carregando === false && perfil) {
+    <div>
+    <div class="row mb-4 align-items-center bg-white p-4 rounded shadow-sm border">
+      <div class="col-auto">
+        <img
+          [src]="perfil.cliente.fotoUrl ? 'http://localhost:8080' + perfil.cliente.fotoUrl : 'assets/avatar-padrao.png'"
+          alt="Foto de Perfil"
+          class="rounded-circle border border-3 border-primary"
+          style="width: 90px; height: 90px; object-fit: cover;"
+        >
+      </div>
+
+      <div class="col">
+        <h1 class="h3 mb-1 text-dark fw-bold">
+          Olá, {{ perfil.cliente.nome }}
+        </h1>
+
+        <p class="text-muted mb-0">
+          Perfil:
+          <span class="badge bg-secondary text-uppercase">
+            {{ perfil.perfil }}
+          </span>
+        </p>
+      </div>
+
+      <div class="col-md-auto text-md-end mt-3 mt-md-0">
+        <span class="text-muted small">
+          Membro desde: {{ perfil.cliente.dataCadastro | date:'dd/MM/yyyy' }}
+        </span>
+      </div>
+      <div class="col-md-auto text-md-end mt-3 mt-md-0">
+        <a routerLink="/dashboard" class="btn btn-outline-primary d-inline-flex align-items-center gap-2 shadow-sm">
+          <i class="bi bi-arrow-left-short fs-5"></i>
+          Voltar
+        </a>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-6" *ngIf="perfil.conta">
+        <div class="card h-100 border-start border-primary border-4 shadow-sm">
+          <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title text-primary fw-semibold mb-0">
+                Sua Conta
+              </h5>
+
+              <span
+                class="badge"
+                [ngClass]="perfil.conta.idStatusConta === 1 ? 'bg-success' : 'bg-danger'"
+              >
+                {{ perfil.conta.idStatusConta === 1 ? 'Ativa' : 'Inativa' }}
+              </span>
+            </div>
+
+            <h6 class="card-subtitle mb-2 text-muted small">
+              Número da Conta: {{ perfil.conta.numeroConta }}
+            </h6>
+
+            <div class="my-4 bg-light p-3 rounded">
+              <span class="text-muted d-block small text-uppercase">
+                Saldo Disponível
+              </span>
+
+              <span class="h2 text-dark fw-bold">
+                {{ perfil.conta.saldo | currency:'BRL':'symbol':'1.2-2' }}
+              </span>
+            </div>
+
+            <p class="card-text text-muted small mb-0">
+              Data de Abertura:
+              {{ perfil.conta.dataAbertura | date:'dd/MM/yyyy' }}
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body p-4">
+
+            <h5 class="card-title text-dark fw-semibold mb-3">
+              Informações Pessoais
+            </h5>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                <span class="text-muted">E-mail:</span>
+                <span class="fw-medium text-end">{{ perfil.email }}</span>
+              </li>
+
+              <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                <span class="text-muted">CPF/Documento:</span>
+                <span class="fw-medium">{{ perfil.cpf }}</span>
+              </li>
+
+              <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                <span class="text-muted">Data de Nascimento:</span>
+                <span class="fw-medium">
+                  {{ perfil.cliente.dataNascimento | date:'dd/MM/yyyy' }}
+                </span>
+              </li>
+
+              <li
+                class="list-group-item px-0 d-flex justify-content-between align-items-center"
+                *ngIf="perfil.cliente.telefone"
+              >
+                <span class="text-muted">Contato:</span>
+                <span class="fw-medium">
+                  +{{ perfil.cliente.telefone.codPais }}
+                  ({{ perfil.cliente.telefone.codArea }})
+                  {{ perfil.cliente.telefone.numero }}
+                </span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="perfil.cliente.endereco">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+
+            <h5 class="card-title text-dark fw-semibold mb-3">
+              Endereço de Correspondência
+            </h5>
+
+            <div class="row">
+              <div class="col-sm-8">
+                <p class="mb-1 text-secondary small text-uppercase">
+                  Logradouro / Número
+                </p>
+
+                <p class="h6 text-dark fw-medium">
+                  {{ perfil.cliente.endereco.logradouro }},
+                  Nº {{ perfil.cliente.endereco.numero }}
+
+                  <span
+                    *ngIf="perfil.cliente.endereco.complemento"
+                    class="text-muted"
+                  >
+                    ({{ perfil.cliente.endereco.complemento }})
+                  </span>
+                </p>
+
+                <p class="mb-0 text-dark">
+                  {{ perfil.cliente.endereco.bairro }}
+                  —
+                  {{ perfil.cliente.endereco.cidade }}
+                  /
+                  {{ perfil.cliente.endereco.estado }}
+                </p>
+              </div>
+
+              <div class="col-sm-4 mt-3 mt-sm-0 text-sm-end border-start-sm">
+                <p class="mb-1 text-secondary small text-uppercase">
+                  Código Postal / CEP
+                </p>
+
+                <p class="h6 text-dark fw-bold">
+                  {{ perfil.cliente.endereco.cep }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  }
+  
+</div>

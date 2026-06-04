@@ -1,0 +1,86 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="row w-100 justify-content-center">
+    <div class="col-12 col-md-5 col-lg-4">
+
+      <div class="card shadow border-0 rounded-4">
+        <div class="card-body p-5">
+
+          <div class="text-center mb-4">
+            <h2 class="text-primary fw-bold mb-1">IFBank</h2>
+            <p class="text-muted small mb-0">
+              O banco digital do Instituto Federal de São Paulo
+            </p>
+          </div>
+
+          <div *ngIf="erroMensagem" class="alert alert-danger py-2 small shadow-sm mb-4" routerLinkActive="alert">
+            {{ erroMensagem }}
+          </div>
+
+          <form #loginForm="ngForm" (ngSubmit)="executarLogin()">
+
+            <div class="mb-3">
+              <label for="email" class="form-label text-secondary small fw-medium">
+                E-mail
+              </label>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control form-control-lg fs-6"
+                placeholder="nome@exemplo.com"
+                [(ngModel)]="dadosForm.email"
+                [disabled]="carregando"
+                required
+              >
+            </div>
+
+            <div class="mb-4">
+              <label for="senha" class="form-label text-secondary small fw-medium">
+                Senha
+              </label>
+
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                class="form-control form-control-lg fs-6"
+                placeholder="••••••••"
+                [(ngModel)]="dadosForm.senha"
+                [disabled]="carregando"
+                required
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-100 fs-6 fw-semibold shadow-sm"
+              [disabled]="carregando || loginForm.invalid"
+            >
+              <ng-container *ngIf="carregando === false">
+                Entrar na Conta
+              </ng-container>
+
+              <ng-container *ngIf="carregando === true">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Validando dados...
+              </ng-container>
+            </button>
+
+          </form>
+
+          <div class="text-center mt-4">
+            <p class="text-muted small mb-0">
+              Não tem conta?
+               <a routerLink="/cadastro" class="text-decoration-none text-primary fw-medium">
+                Abra sua conta agora
+              </a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
