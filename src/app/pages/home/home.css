@@ -1,0 +1,395 @@
+/* ========== TOKENS ========== */
+:host {
+  --blue-900: #0a1628;
+  --blue-800: #102040;
+  --blue-600: #1a3a6b;
+  --brand: #1d6af5;
+  --brand-light: #4d8ff8;
+  --brand-glow: rgba(29, 106, 245, 0.25);
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --surface: #f8fafc;
+  --white: #ffffff;
+  --radius-card: 1.25rem;
+  --radius-btn: 0.6rem;
+  display: block;
+}
+
+/* ========== HERO ========== */
+.hero-section {
+  background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-800) 60%, var(--blue-600) 100%);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "nav nav"
+    "content card";
+  padding: 0 6vw 5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(29,106,245,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* NAV */
+.navbar-custom {
+  grid-area: nav;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem 0;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--brand-light);
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.btn-nav-login {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-btn);
+  transition: color 0.2s;
+}
+.btn-nav-login:hover { color: #fff; }
+
+.btn-nav-cadastro {
+  background: var(--brand);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.45rem 1.2rem;
+  border-radius: var(--radius-btn);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-nav-cadastro:hover {
+  background: var(--brand-light);
+  box-shadow: 0 0 0 4px var(--brand-glow);
+}
+
+/* HERO CONTENT */
+.hero-content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(29,106,245,0.2);
+  border: 1px solid rgba(29,106,245,0.4);
+  color: var(--brand-light);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: 2rem;
+  width: fit-content;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin: 0 0 1.25rem;
+}
+
+.hero-accent {
+  color: var(--brand-light);
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.65;
+  max-width: 440px;
+  margin-bottom: 2.25rem;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary-hero {
+  background: var(--brand);
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-btn);
+  box-shadow: 0 4px 20px var(--brand-glow);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+.btn-primary-hero:hover {
+  background: var(--brand-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px var(--brand-glow);
+}
+
+.btn-ghost-hero {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.btn-ghost-hero:hover { color: #fff; }
+
+/* BANK CARD */
+.hero-card-wrapper {
+  grid-area: card;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.bank-card {
+  background: linear-gradient(135deg, #1d3a7a 0%, var(--brand) 100%);
+  border-radius: 1.5rem;
+  width: 340px;
+  max-width: 90%;
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.07);
+  position: relative;
+  overflow: hidden;
+  transform: rotate(3deg);
+  transition: transform 0.3s ease;
+}
+
+.bank-card::before {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+  top: -80px;
+  right: -60px;
+}
+
+.bank-card:hover { transform: rotate(0deg) translateY(-4px); }
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+}
+
+.card-brand {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.card-type {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+
+.card-number {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.2em;
+  font-family: monospace;
+  margin-bottom: 1.5rem;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-holder {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-exp {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ========== FEATURES ========== */
+.features-section {
+  background: var(--surface);
+  padding: 6rem 6vw;
+  text-align: center;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand);
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  margin-bottom: 3rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+.feature-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0.75rem 0 0.5rem;
+}
+
+.feature-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin: 0 auto;
+}
+
+.deposit-icon  { background: #dbeafe; color: #2563eb; }
+.withdraw-icon { background: #fee2e2; color: #dc2626; }
+.statement-icon{ background: #e0f2fe; color: #0284c7; }
+.invest-icon   { background: #dcfce7; color: #16a34a; }
+.loan-icon     { background: #fef9c3; color: #ca8a04; }
+.profile-icon  { background: #f1f5f9; color: #475569; }
+
+/* ========== CTA SECTION ========== */
+.cta-section {
+  background: linear-gradient(135deg, var(--blue-900), var(--blue-800));
+  padding: 6rem 6vw;
+  text-align: center;
+}
+
+.cta-title {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.cta-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 2rem;
+}
+
+/* ========== FOOTER ========== */
+.site-footer {
+  background: var(--blue-900);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 1.5rem 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-brand {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--brand-light);
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "nav"
+      "content"
+      "card";
+    padding: 0 5vw 4rem;
+  }
+
+  .hero-card-wrapper {
+    padding-top: 3rem;
+  }
+
+  .bank-card {
+    transform: none;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: center;
+  }
+}
