@@ -1,111 +1,204 @@
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
-      
-      <div class="card shadow border-0 rounded-4">
-        <div class="card-body p-5">
-          
-          <div class="mb-4">
-            <h2 class="text-primary fw-bold mb-1">Abre a tua Conta</h2>
-            <p class="text-muted">Preenche os teus dados abaixo para fazer parte do IFBank</p>
+<div class="cadastro-wrapper">
+
+  <div class="brand-pill">IFBank • Abertura de Conta</div>
+
+  <div class="cadastro-card">
+    <div class="row g-0 h-100">
+
+      <!-- LATERAL ESQUERDA -->
+      <div class="col-md-4 side-panel">
+        <div class="side-content">
+
+          <div class="side-logo">
+            <span class="logo-icon">🏦</span>
+            <span class="logo-text">IFBank</span>
           </div>
 
-          <div *ngIf="mensagemSucesso" class="alert alert-success shadow-sm mb-4" role="alert">
+          <h2>Conta Digital</h2>
+          <p class="side-desc">
+            Sua conta acadêmica completa, segura e desenvolvida por estudantes do IFSP.
+          </p>
+
+          <div class="info-box">
+            <span class="info-title">Projeto Acadêmico</span>
+            <p class="info-text">
+              Desenvolvido como projeto integrador do curso de Tecnologia em Sistemas para Internet.
+            </p>
+          </div>
+
+          <div class="badge-feature">
+            <span class="dot"></span>
+            <span>Conta gratuita e 100% digital</span>
+          </div>
+          <div class="badge-feature">
+            <span class="dot"></span>
+            <span>Transferências e pagamentos</span>
+          </div>
+          <div class="badge-feature">
+            <span class="dot"></span>
+            <span>Segurança com Spring Security</span>
+          </div>
+
+          <hr class="side-divider">
+
+          <p class="benefits-title">O que você pode fazer:</p>
+          <ul class="benefits">
+            <li>Gerenciar sua conta bancária</li>
+            <li>Realizar transferências</li>
+            <li>Acompanhar extrato</li>
+            <li>Gerenciar perfil</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FORMULÁRIO DIREITA -->
+      <div class="col-md-8">
+        <div class="form-panel">
+
+          <h3 class="form-title">Abra sua conta IFBank</h3>
+          <p class="form-subtitle">Seus dados são protegidos e usados apenas para fins acadêmicos.</p>
+
+          <div *ngIf="mensagemSucesso" class="alert alert-success" role="alert">
             {{ mensagemSucesso }}
           </div>
-          <div *ngIf="mensagemErro" class="alert alert-danger shadow-sm mb-4" role="alert">
+          <div *ngIf="mensagemErro" class="alert alert-danger" role="alert">
             {{ mensagemErro }}
           </div>
 
           <form (ngSubmit)="executarCadastro()">
-            
-            <h5 class="text-dark fw-semibold mb-3 pb-2 border-bottom">Informações Gerais</h5>
-            <div class="row g-3 mb-4">
+
+            <!-- DADOS DE ACESSO -->
+            <span class="section-title">Dados de acesso</span>
+            <div class="section-divider"></div>
+
+            <div class="row mb-3">
               <div class="col-md-6">
-                <label class="form-label text-secondary small fw-medium">Nome Completo</label>
-                <input type="text" class="form-control" name="nome" [(ngModel)]="formCadastro.nome" required [disabled]="carregando">
+                <label class="form-label">CPF</label>
+                <input type="text" class="form-control" name="cpf" [(ngModel)]="formCadastro.cpf"
+                  placeholder="000.000.000-00" required [disabled]="carregando">
               </div>
               <div class="col-md-6">
-                <label class="form-label text-secondary small fw-medium">Data de Nascimento</label>
-                <input type="text" class="form-control" name="dataNascimento" [(ngModel)]="formCadastro.dataNascimento" placeholder="dd/mm/aaaa" required [disabled]="carregando">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label text-secondary small fw-medium">CPF</label>
-                <input type="text" class="form-control" name="cpf" [(ngModel)]="formCadastro.cpf" placeholder="000.000.000-00" required [disabled]="carregando">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label text-secondary small fw-medium">E-mail</label>
-                <input type="email" class="form-control" name="email" [(ngModel)]="formCadastro.email" placeholder="exemplo@ifbank.com" required [disabled]="carregando">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label text-secondary small fw-medium">Senha de Acesso</label>
-                <input type="password" class="form-control" name="senha" [(ngModel)]="formCadastro.senha" placeholder="Mínimo 6 caracteres" required [disabled]="carregando">
-              </div>
-              
-              <div class="col-12">
-                <label class="form-label text-secondary small fw-medium">Foto de Perfil (Opcional)</label>
-                <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event)" [disabled]="carregando">
-                <div class="form-text small text-muted">Apenas imagens (.png).</div>
+                <label class="form-label">E-mail</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="formCadastro.email"
+                  placeholder="exemplo@ifbank.com" required [disabled]="carregando">
               </div>
             </div>
 
-            <h5 class="text-dark fw-semibold mb-3 pb-2 border-bottom">Telefone</h5>
-            <div class="row g-3 mb-4">
-              <div class="col-md-3">
-                <label class="form-label text-secondary small fw-medium">Cód. País</label>
-                <input type="number" class="form-control" name="codPais" [(ngModel)]="formCadastro.codPais" [disabled]="carregando">
-              </div>
-              <div class="col-md-3">
-                <label class="form-label text-secondary small fw-medium">DDD / Área</label>
-                <input type="number" class="form-control" name="codArea" [(ngModel)]="formCadastro.codArea" placeholder="Ex: 16" required [disabled]="carregando">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Senha</label>
+                <input type="password" class="form-control" name="senha" [(ngModel)]="formCadastro.senha"
+                  placeholder="Mínimo 6 caracteres" required [disabled]="carregando">
               </div>
               <div class="col-md-6">
-                <label class="form-label text-secondary small fw-medium">Número do Telefone</label>
-                <input type="number" class="form-control" name="numeroTelefone" [(ngModel)]="formCadastro.numeroTelefone" placeholder="Ex: 999999999" required [disabled]="carregando">
+                <label class="form-label">Foto de Perfil <span class="text-muted small">(opcional)</span></label>
+                <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event)"
+                  [disabled]="carregando">
               </div>
             </div>
 
-            <h5 class="text-dark fw-semibold mb-3 pb-2 border-bottom">Endereço de Residência</h5>
-            <div class="row g-3 mb-4">
+            <!-- DADOS PESSOAIS -->
+            <span class="section-title">Dados pessoais</span>
+            <div class="section-divider"></div>
+
+            <div class="row mb-3">
+              <div class="col-md-8">
+                <label class="form-label">Nome completo</label>
+                <input type="text" class="form-control" name="nome" [(ngModel)]="formCadastro.nome"
+                  required [disabled]="carregando">
+              </div>
               <div class="col-md-4">
-                <label class="form-label text-secondary small fw-medium">CEP</label>
-                <input type="text" class="form-control" name="cep" [(ngModel)]="formCadastro.cep" placeholder="00000-000" required [disabled]="carregando">
+                <label class="form-label">Data de nascimento</label>
+                <input type="text" class="form-control" name="dataNascimento"
+                  [(ngModel)]="formCadastro.dataNascimento" placeholder="dd/mm/aaaa"
+                  required [disabled]="carregando">
+              </div>
+            </div>
+
+            <!-- TELEFONE -->
+            <span class="section-title">Telefone</span>
+            <div class="section-divider"></div>
+
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label">Cód. País</label>
+                <input type="number" class="form-control" name="codPais" [(ngModel)]="formCadastro.codPais"
+                  [disabled]="carregando">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">DDD</label>
+                <input type="number" class="form-control" name="codArea" [(ngModel)]="formCadastro.codArea"
+                  placeholder="Ex: 16" required [disabled]="carregando">
               </div>
               <div class="col-md-6">
-                <label class="form-label text-secondary small fw-medium">Logradouro / Rua</label>
-                <input type="text" class="form-control" name="logradouro" [(ngModel)]="formCadastro.logradouro" required [disabled]="carregando">
+                <label class="form-label">Número</label>
+                <input type="number" class="form-control" name="numeroTelefone"
+                  [(ngModel)]="formCadastro.numeroTelefone" placeholder="Ex: 999999999"
+                  required [disabled]="carregando">
+              </div>
+            </div>
+
+            <!-- ENDEREÇO -->
+            <span class="section-title">Endereço</span>
+            <div class="section-divider"></div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label">CEP</label>
+                <input type="text" class="form-control" name="cep" [(ngModel)]="formCadastro.cep"
+                  placeholder="00000-000" required [disabled]="carregando">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Logradouro</label>
+                <input type="text" class="form-control" name="logradouro" [(ngModel)]="formCadastro.logradouro"
+                  required [disabled]="carregando">
               </div>
               <div class="col-md-2">
-                <label class="form-label text-secondary small fw-medium">Nº</label>
-                <input type="number" class="form-control" name="numero" [(ngModel)]="formCadastro.numero" required [disabled]="carregando">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label text-secondary small fw-medium">Complemento</label>
-                <input type="text" class="form-control" name="complemento" [(ngModel)]="formCadastro.complemento" placeholder="Apt, Bloco..." [disabled]="carregando">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label text-secondary small fw-medium">Bairro</label>
-                <input type="text" class="form-control" name="bairro" [(ngModel)]="formCadastro.bairro" required [disabled]="carregando">
-              </div>
-              <div class="col-md-3">
-                <label class="form-label text-secondary small fw-medium">Cidade</label>
-                <input type="text" class="form-control" name="cidade" [(ngModel)]="formCadastro.cidade" required [disabled]="carregando">
-              </div>
-              <div class="col-md-1">
-                <label class="form-label text-secondary small fw-medium">UF</label>
-                <input type="text" class="form-control" name="estado" [(ngModel)]="formCadastro.estado" maxlength="2" placeholder="SP" required [disabled]="carregando">
+                <label class="form-label">Nº</label>
+                <input type="number" class="form-control" name="numero" [(ngModel)]="formCadastro.numero"
+                  required [disabled]="carregando">
               </div>
             </div>
 
-            <div class="d-flex justify-content-end gap-3 mt-4">
-              <button type="button" class="btn btn-light px-4" routerLink="/login" [disabled]="carregando">Cancelar</button>
-              <button type="submit" class="btn btn-primary px-5 fw-semibold" [disabled]="carregando">
-                <span *ngIf="!carregando">Criar Minha Conta</span>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Complemento</label>
+                <input type="text" class="form-control" name="complemento" [(ngModel)]="formCadastro.complemento"
+                  placeholder="Apt, Bloco..." [disabled]="carregando">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Bairro</label>
+                <input type="text" class="form-control" name="bairro" [(ngModel)]="formCadastro.bairro"
+                  required [disabled]="carregando">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Cidade</label>
+                <input type="text" class="form-control" name="cidade" [(ngModel)]="formCadastro.cidade"
+                  required [disabled]="carregando">
+              </div>
+              <div class="col-md-1">
+                <label class="form-label">UF</label>
+                <input type="text" class="form-control" name="estado" [(ngModel)]="formCadastro.estado"
+                  maxlength="2" placeholder="SP" required [disabled]="carregando">
+              </div>
+            </div>
+
+            <!-- BOTÕES -->
+            <div class="form-actions">
+              <button type="button" class="btn-cancelar" routerLink="/login" [disabled]="carregando">
+                Voltar para login
+              </button>
+              <button type="submit" class="btn-cadastrar" [disabled]="carregando">
+                <span *ngIf="!carregando">Criar minha conta</span>
                 <span *ngIf="carregando" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               </button>
             </div>
 
           </form>
+
+          <p class="terms-text">
+            Ao continuar, você concorda com os termos de uso do IFBank.
+          </p>
 
         </div>
       </div>

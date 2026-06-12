@@ -1,0 +1,308 @@
+:host {
+  display: block;
+}
+
+/* -------- WRAPPER -------- */
+
+.cadastro-wrapper {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #4c8dff33, #0d6efd11 40%, #0a1a33 100%), #f5f7fc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* -------- BRAND PILL -------- */
+
+.brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 16px;
+  border-radius: 999px;
+  background: #0d6efd18;
+  color: #0d6efd;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+/* -------- CARD -------- */
+
+.cadastro-card {
+  width: 100%;
+  max-width: 1060px;
+  border-radius: 22px;
+  border: 1px solid #0d6efd22;
+  box-shadow: 0 20px 64px #0d6efd2a;
+  background: linear-gradient(135deg, #ffffff, #eff4ff);
+  overflow: hidden;
+}
+
+/* -------- LATERAL ESQUERDA -------- */
+
+.side-panel {
+  background: radial-gradient(circle at top, #1a6dff, #001b4d);
+  color: white;
+  min-height: 100%;
+}
+
+.side-content {
+  padding: 40px 28px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.logo-icon {
+  font-size: 22px;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.side-content h2 {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.side-desc {
+  font-size: 13px;
+  opacity: 0.88;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.info-box {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin: 24px 0;
+}
+
+.info-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4cffd2;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.info-text {
+  font-size: 12px;
+  opacity: 0.84;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.badge-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: #4cffd2;
+  box-shadow: 0 0 8px #4cffd2;
+}
+
+.side-divider {
+  border-color: rgba(255, 255, 255, 0.2);
+  margin: 24px 0;
+}
+
+.benefits-title {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.benefits {
+  padding-left: 18px;
+  font-size: 13px;
+  opacity: 0.88;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* -------- FORMULÁRIO DIREITA -------- */
+
+.form-panel {
+  padding: 40px 48px;
+}
+
+.form-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0a2a57;
+  margin-bottom: 6px;
+}
+
+.form-subtitle {
+  color: #6c757d;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* -------- SEÇÕES -------- */
+
+.section-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: #7b8094;
+  text-transform: uppercase;
+}
+
+.section-divider {
+  border-top: 1px dashed #c8d0e8;
+  margin: 8px 0 16px;
+}
+
+/* -------- CAMPOS -------- */
+
+.form-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 4px;
+}
+
+.form-control {
+  border-radius: 12px;
+  border: 1px solid #ccd3ea;
+  font-size: 14px;
+  padding: 9px 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px #0d6efd22;
+  outline: none;
+}
+
+.form-control:disabled {
+  background: #f8f9fb;
+  opacity: 0.7;
+}
+
+/* -------- ALERTS -------- */
+
+.alert {
+  border-radius: 12px;
+  font-size: 14px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+/* -------- BOTÕES -------- */
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+.btn-cancelar {
+  padding: 11px 24px;
+  border-radius: 14px;
+  border: 1px solid #dee2e6;
+  background: white;
+  color: #495057;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cancelar:hover {
+  background: #f8f9fa;
+}
+
+.btn-cancelar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-cadastrar {
+  padding: 11px 32px;
+  border-radius: 14px;
+  border: none;
+  background: #0d6efd;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 22px #0d6efd44;
+  transition: filter 0.2s, transform 0.15s;
+}
+
+.btn-cadastrar:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.btn-cadastrar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* -------- TERMOS -------- */
+
+.terms-text {
+  font-size: 12px;
+  color: #adb5bd;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+/* -------- RESPONSIVO -------- */
+
+@media (max-width: 768px) {
+  .side-panel {
+    display: none;
+  }
+
+  .form-panel {
+    padding: 28px 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancelar,
+  .btn-cadastrar {
+    width: 100%;
+    text-align: center;
+  }
+}
