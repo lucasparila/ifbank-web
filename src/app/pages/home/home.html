@@ -1,0 +1,188 @@
+<!-- HEADER -->
+<header class="header-fixed">
+  <h1 class="header-brand">IFBank</h1>
+  <nav class="header-nav">
+    <a href="#sobre">Sobre</a>
+    <a href="#seguranca">Segurança</a>
+    <a href="#rendimentos">Rendimentos</a>
+  </nav>
+  <div class="header-actions">
+    <a routerLink="/login" class="btn-outline-header">Entrar</a>
+    <a routerLink="/cadastro" class="btn-primary-header">Abrir conta</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-text">
+    <span class="hero-badge">Banco Digital do IFSP</span>
+    <h2>O Banco Digital<br>do Instituto Federal.</h2>
+    <p>Segurança máxima, tecnologia de ponta e uma conta gratuita para toda a comunidade do IFSP.</p>
+    <div class="hero-btns">
+      <a routerLink="/cadastro" class="btn-primary-header btn-lg">Abrir conta agora</a>
+      <a routerLink="/login" class="btn-ghost-header">Já tenho conta →</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-pill"><span class="stat-num">100%</span><span class="stat-lbl">Gratuito</span></div>
+    <div class="stat-pill"><span class="stat-num">24/7</span><span class="stat-lbl">Disponível</span></div>
+    <div class="stat-pill"><span class="stat-num">0</span><span class="stat-lbl">Tarifas</span></div>
+  </div>
+</section>
+
+<!-- POR QUE ESCOLHER -->
+<section class="section" id="sobre">
+  <h2 class="section-title">Por que escolher o IFBank?</h2>
+  <div class="cards-grid">
+    <div class="card-feat">
+      <div class="feat-icon blue"><i class="bi bi-shield-lock-fill"></i></div>
+      <h3>Segurança total</h3>
+      <p>Dados criptografados e autenticação segura em todas as operações da sua conta.</p>
+    </div>
+    <div class="card-feat">
+      <div class="feat-icon indigo"><i class="bi bi-phone-fill"></i></div>
+      <h3>100% digital</h3>
+      <p>Acesse sua conta de qualquer lugar, a qualquer hora, direto pelo navegador.</p>
+    </div>
+    <div class="card-feat">
+      <div class="feat-icon cyan"><i class="bi bi-lightning-charge-fill"></i></div>
+      <h3>Rápido e simples</h3>
+      <p>Depósito, saque, transferência e extrato em poucos cliques. Sem burocracia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RENDIMENTOS + CARTÃO GIRANDO -->
+<section class="rendimentos" id="rendimentos">
+  <div class="r-grid">
+    <!-- Cartão 3D girando -->
+    <div class="card3d-scene">
+      <div class="card3d spin">
+        <div class="card3d-front">
+          <div class="c3-top">
+            <span class="c3-brand">IFBank</span>
+            <i class="bi bi-wifi c3-wifi"></i>
+          </div>
+          <div class="c3-chip"><span></span></div>
+          <div class="c3-number">4200 1234 5678 9012</div>
+          <div class="c3-bottom">
+            <span class="c3-name">INSTITUTO FEDERAL SP</span>
+            <span class="c3-exp">12/29</span>
+          </div>
+        </div>
+        <div class="card3d-back">
+          <div class="c3-stripe"></div>
+          <div class="c3-cvv-wrap">
+            <span class="c3-cvv-label">CVV</span>
+            <span class="c3-cvv-val">•••</span>
+          </div>
+          <span class="c3-back-brand">IFBank</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Caixa de rendimentos -->
+    <div class="r-box">
+      <h2>Serviços disponíveis</h2>
+      <div class="r-item">
+        <span><i class="bi bi-cash-coin me-2 text-primary"></i>Depósito</span>
+        <span class="r-badge">Instantâneo</span>
+      </div>
+      <div class="r-item">
+        <span><i class="bi bi-cash-stack me-2 text-danger"></i>Saque</span>
+        <span class="r-badge">Sem taxa</span>
+      </div>
+      <div class="r-item">
+        <span><i class="bi bi-send-fill me-2 text-purple"></i>Transferência</span>
+        <span class="r-badge">Gratuita</span>
+      </div>
+      <div class="r-item">
+        <span><i class="bi bi-graph-up-arrow me-2 text-success"></i>Investimentos</span>
+        <span class="r-badge">+CDI</span>
+      </div>
+      <div class="r-item">
+        <span><i class="bi bi-bank me-2 text-warning"></i>Empréstimo</span>
+        <span class="r-badge">Taxa especial IFSP</span>
+      </div>
+      <a routerLink="/cadastro" class="btn-primary-header mt-4 d-inline-block">Quero minha conta</a>
+    </div>
+  </div>
+</section>
+
+<!-- SEGURANÇA -->
+<section class="section" id="seguranca">
+  <div class="seg-grid">
+    <div class="seg-text">
+      <span class="hero-badge">Infraestrutura</span>
+      <h2 class="section-title" style="text-align:left; margin-bottom:1rem;">Sua segurança<br>é prioridade.</h2>
+      <p style="color:#5a6a85; line-height:1.7;">O IFBank utiliza criptografia de ponta a ponta, autenticação segura e infraestrutura confiável para proteger cada centavo e cada dado da sua conta.</p>
+    </div>
+    <div class="seg-items">
+      <div class="seg-item">
+        <i class="bi bi-lock-fill"></i>
+        <div>
+          <strong>Criptografia AES-256</strong>
+          <p>Todos os dados trafegam criptografados.</p>
+        </div>
+      </div>
+      <div class="seg-item">
+        <i class="bi bi-person-check-fill"></i>
+        <div>
+          <strong>Autenticação segura</strong>
+          <p>Login protegido com validação em múltiplas camadas.</p>
+        </div>
+      </div>
+      <div class="seg-item">
+        <i class="bi bi-cloud-check-fill"></i>
+        <div>
+          <strong>Disponibilidade 24/7</strong>
+          <p>Infraestrutura estável, disponível a qualquer momento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <h2>Pronto para abrir sua conta?</h2>
+  <p>Junte-se à comunidade IFBank e tenha uma conta digital gratuita, segura e completa.</p>
+  <a routerLink="/cadastro" class="btn-primary-header btn-lg">Criar minha conta grátis</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand-col">
+      <h2 class="footer-brand">IFBank</h2>
+      <p>Banco digital do Instituto Federal de São Paulo. Tecnologia e segurança para toda a comunidade IFSP.</p>
+    </div>
+    <div>
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#seguranca">Segurança</a></li>
+        <li><a href="#rendimentos">Rendimentos</a></li>
+        <li><a routerLink="/cadastro">Abrir conta</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Acesso</h4>
+      <ul>
+        <li><a routerLink="/login">Entrar na conta</a></li>
+        <li><a routerLink="/cadastro">Criar conta</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Institucional</h4>
+      <ul>
+        <li><a href="#">Termos de Uso</a></li>
+        <li><a href="#">Privacidade</a></li>
+        <li><a href="#">Transparência</a></li>
+      </ul>
+    </div>
+  </div>
+  <hr class="footer-hr">
+  <p class="footer-copy">© 2025 IFBank • Instituto Federal de São Paulo. Todos os direitos reservados.</p>
+</footer>
