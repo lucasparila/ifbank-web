@@ -4,6 +4,7 @@ import { Perfil } from './pages/perfil/perfil';
 import { Cadastro } from './pages/cadastro/cadastro';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Home } from './pages/home/home';
+import { DashboardGerente } from './pages/dashboard-gerente/dashboard-gerente';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: 'cadastro', component: Cadastro },
   { path: 'perfil', component: Perfil },
   { path: 'dashboard', component: Dashboard },
+  { path: 'dashboard-gerente', component: DashboardGerente },
   { path: '**', redirectTo: '' }
 ];
