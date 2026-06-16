@@ -5,9 +5,11 @@ import { Cadastro } from './pages/cadastro/cadastro';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Home } from './pages/home/home';
 import { DashboardGerente } from './pages/dashboard-gerente/dashboard-gerente';
+import { Investimento } from './pages/investimento/investimento';
 
 export const routes: Routes = [
   { path: '', component: Home },
+  {path: 'investimento', component: Investimento},
   { path: 'home', component: Home },
   { path: 'login', component: Login },
   { path: 'cadastro', component: Cadastro },

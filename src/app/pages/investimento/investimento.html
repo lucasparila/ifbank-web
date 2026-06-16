@@ -1,0 +1,311 @@
+<!-- LOADING -->
+@if(carregando) {
+  <div class="inv-loading">
+    <div class="spinner-border text-primary" role="status"></div>
+    <span>Carregando seus investimentos...</span>
+  </div>
+}
+
+@if(!carregando) {
+  <div class="inv-wrapper">
+
+    <!-- NAVBAR -->
+    <nav class="inv-navbar">
+      <a routerLink="/home" class="inv-brand">IFBank</a>
+      <div class="inv-nav-right">
+        <span class="inv-greeting">Olá, <strong>{{ perfil.cliente.nome }}</strong></span>
+        <img
+          [src]="perfil.cliente.fotoUrl ? 'http://localhost:8080' + perfil.cliente.fotoUrl : 'assets/avatar-padrao.png'"
+          alt="Foto" class="inv-avatar"
+        >
+        <button (click)="logout()" class="inv-logout" title="Sair">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div class="inv-container">
+
+      <!-- PAGE HEADER -->
+      <div class="inv-page-header">
+        <div>
+          <div class="inv-badge">
+            <i class="bi bi-graph-up-arrow"></i> Módulo de Investimentos
+          </div>
+          <h1 class="inv-page-title">Seus Investimentos</h1>
+          <p class="inv-page-sub">Aplique, acompanhe e resgate seus rendimentos com segurança.</p>
+        </div>
+        <a routerLink="/dashboard" class="inv-btn-back">
+          <i class="bi bi-arrow-left-short"></i> Voltar ao Dashboard
+        </a>
+      </div>
+
+      <!-- ALERTS -->
+      @if(erroMensagem) {
+        <div class="inv-alert inv-alert-danger">
+          <i class="bi bi-exclamation-triangle-fill"></i> {{ erroMensagem }}
+        </div>
+      }
+      @if(sucessoMensagem) {
+        <div class="inv-alert inv-alert-success">
+          <i class="bi bi-check-circle-fill"></i> {{ sucessoMensagem }}
+        </div>
+      }
+
+      <!-- CARDS DE RESUMO -->
+      <div class="inv-summary-grid">
+
+        <!-- Saldo disponível -->
+        <div class="inv-card inv-card-dark" *ngIf="perfil.conta">
+          <div class="inv-card-content">
+            <span class="inv-card-label">Saldo Disponível</span>
+            <span class="inv-card-value inv-value-primary">
+              {{ perfil.conta.saldo | currency:'BRL':'symbol':'1.2-2' }}
+            </span>
+            <span class="inv-card-sub">Conta {{ perfil.conta.numeroConta }}</span>
+          </div>
+          <div class="inv-card-bg-icon"><i class="bi bi-wallet2"></i></div>
+        </div>
+
+        <!-- Total Investido -->
+        <div class="inv-card inv-card-green">
+          <div class="inv-card-content">
+            <span class="inv-card-label">Total Investido</span>
+            <span class="inv-card-value inv-value-green">
+              {{ resumo.totalInvestido | currency:'BRL':'symbol':'1.2-2' }}
+            </span>
+            <span class="inv-card-sub">
+              <i class="bi bi-layers me-1"></i>{{ resumo.quantidadeInvestimentos }} aplicação(ões) ativa(s)
+            </span>
+          </div>
+          <div class="inv-card-bg-icon"><i class="bi bi-piggy-bank"></i></div>
+        </div>
+
+        <!-- Rendimento Acumulado -->
+        <div class="inv-card inv-card-gold">
+          <div class="inv-card-content">
+            <span class="inv-card-label">Rendimento Acumulado</span>
+            <span class="inv-card-value inv-value-gold">
+              {{ resumo.rendimentoAcumulado | currency:'BRL':'symbol':'1.2-2' }}
+            </span>
+            <span class="inv-card-sub">
+              <i class="bi bi-graph-up me-1"></i>Sobre o total aplicado
+            </span>
+          </div>
+          <div class="inv-card-bg-icon"><i class="bi bi-graph-up-arrow"></i></div>
+        </div>
+
+      </div>
+
+      <!-- FORMULÁRIOS -->
+      <div class="inv-forms-grid">
+
+        <!-- APLICAR -->
+        <div class="inv-panel">
+          <div class="inv-panel-header inv-panel-header-green">
+            <div class="inv-panel-icon"><i class="bi bi-cash-coin"></i></div>
+            <div>
+              <h2 class="inv-panel-title">Aplicar Investimento</h2>
+              <p class="inv-panel-sub">Escolha o produto e informe o valor.</p>
+            </div>
+          </div>
+
+          @if(erroAplicacao) {
+            <div class="inv-alert inv-alert-danger inv-alert-sm">
+              <i class="bi bi-exclamation-triangle-fill"></i> {{ erroAplicacao }}
+            </div>
+          }
+
+          <div class="inv-field">
+            <label class="inv-label">Tipo de Investimento</label>
+            <select class="inv-select" [(ngModel)]="idTipoSelecionado" [disabled]="aplicando" name="tipo">
+              <option [ngValue]="null" disabled>Selecione o produto...</option>
+              @for(tipo of tiposDisponiveis; track tipo.id) {
+                <option [ngValue]="tipo.id">
+                  {{ tipo.nome }} — {{ (tipo.rentabilidadeMes * 100).toFixed(2) }}% a.m.
+                </option>
+              }
+            </select>
+            @if(tipoSelecionado()) {
+              <div class="inv-tipo-info">
+                <span><i class="bi bi-info-circle me-1"></i>Valor mín.: <strong>{{ tipoSelecionado()!.valorMinimo | currency:'BRL':'symbol':'1.2-2' }}</strong></span>
+                <span>Carência: <strong>{{ tipoSelecionado()!.carenciaDias }} dias</strong></span>
+              </div>
+            }
+          </div>
+
+          <div class="inv-field">
+            <label class="inv-label">Valor a Aplicar (R$)</label>
+            <input
+              type="number" class="inv-input" placeholder="0,00"
+              [(ngModel)]="valorAplicado" [disabled]="aplicando"
+              name="valor" min="1"
+            >
+          </div>
+
+          <button class="inv-btn inv-btn-green" (click)="aplicar()" [disabled]="aplicando">
+            @if(aplicando) {
+              <span class="spinner-border spinner-border-sm me-2"></span> Aplicando...
+            } @else {
+              <i class="bi bi-check-circle me-2"></i> Confirmar Aplicação
+            }
+          </button>
+        </div>
+
+        <!-- RESGATAR -->
+        <div class="inv-panel">
+          <div class="inv-panel-header inv-panel-header-red">
+            <div class="inv-panel-icon inv-panel-icon-red"><i class="bi bi-arrow-down-circle"></i></div>
+            <div>
+              <h2 class="inv-panel-title">Resgatar Investimento</h2>
+              <p class="inv-panel-sub">Selecione uma aplicação ativa para resgatar.</p>
+            </div>
+          </div>
+
+          @if(erroResgate) {
+            <div class="inv-alert inv-alert-danger inv-alert-sm">
+              <i class="bi bi-exclamation-triangle-fill"></i> {{ erroResgate }}
+            </div>
+          }
+
+          <div class="inv-field">
+            <label class="inv-label">Selecione o Investimento</label>
+            <select class="inv-select" [(ngModel)]="idInvestimentoResgate" [disabled]="resgatando" name="resgate">
+              <option [ngValue]="null" disabled>Selecione...</option>
+              @for(inv of ativos(); track inv.id) {
+                <option [ngValue]="inv.id">
+                  {{ inv.tipoInvestimento }} — {{ inv.valorAplicado | currency:'BRL':'symbol':'1.2-2' }}
+                  (+{{ inv.rendimentoAcumulado | currency:'BRL':'symbol':'1.2-2' }})
+                </option>
+              }
+            </select>
+            @if(ativos().length === 0) {
+              <p class="inv-empty-hint">Nenhum investimento ativo disponível.</p>
+            }
+          </div>
+
+          @if(idInvestimentoResgate) {
+            <div class="inv-resgate-preview">
+              @for(inv of ativos(); track inv.id) {
+                @if(inv.id === idInvestimentoResgate) {
+                  <div class="inv-preview-row">
+                    <span>Valor aplicado</span>
+                    <strong>{{ inv.valorAplicado | currency:'BRL':'symbol':'1.2-2' }}</strong>
+                  </div>
+                  <div class="inv-preview-row inv-preview-green">
+                    <span>Rendimento estimado</span>
+                    <strong>+{{ inv.rendimentoAcumulado | currency:'BRL':'symbol':'1.2-2' }}</strong>
+                  </div>
+                  <div class="inv-preview-row inv-preview-total">
+                    <span>Total a receber</span>
+                    <strong>{{ (inv.valorAplicado + inv.rendimentoAcumulado) | currency:'BRL':'symbol':'1.2-2' }}</strong>
+                  </div>
+                }
+              }
+            </div>
+          }
+
+          <button
+            class="inv-btn inv-btn-red" (click)="resgatar()"
+            [disabled]="resgatando || ativos().length === 0"
+          >
+            @if(resgatando) {
+              <span class="spinner-border spinner-border-sm me-2"></span> Resgatando...
+            } @else {
+              <i class="bi bi-arrow-down-circle me-2"></i> Confirmar Resgate
+            }
+          </button>
+        </div>
+
+      </div>
+
+      <!-- TABELA INVESTIMENTOS ATIVOS -->
+      <div class="inv-table-card">
+        <div class="inv-table-header">
+          <div class="inv-table-title">
+            <i class="bi bi-table text-primary me-2"></i> Investimentos Ativos
+          </div>
+          <span class="inv-table-badge">{{ ativos().length }} ativo(s)</span>
+        </div>
+
+        @if(ativos().length === 0) {
+          <div class="inv-empty-state">
+            <i class="bi bi-inbox"></i>
+            <p>Você ainda não possui investimentos ativos.</p>
+            <span>Use o formulário acima para fazer sua primeira aplicação.</span>
+          </div>
+        } @else {
+          <div class="table-responsive">
+            <table class="inv-table">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Valor Aplicado</th>
+                  <th>Rendimento</th>
+                  <th>Taxa Mensal</th>
+                  <th>Data Aplicação</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(inv of ativos(); track inv.id) {
+                  <tr>
+                    <td>
+                      <span class="inv-tag inv-tag-blue">{{ inv.tipoInvestimento }}</span>
+                    </td>
+                    <td class="fw-semibold">{{ inv.valorAplicado | currency:'BRL':'symbol':'1.2-2' }}</td>
+                    <td>
+                      <span class="inv-rendimento">
+                        <i class="bi bi-graph-up"></i>
+                        {{ inv.rendimentoAcumulado | currency:'BRL':'symbol':'1.2-2' }}
+                      </span>
+                    </td>
+                    <td class="text-muted">{{ (inv.taxaRendimento * 100).toFixed(2) }}%</td>
+                    <td class="text-muted">{{ inv.dataAplicacao | date:'dd/MM/yyyy' }}</td>
+                    <td><span class="inv-tag inv-tag-green">{{ inv.status }}</span></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+
+      <!-- TODOS OS INVESTIMENTOS (histórico) -->
+      @if(investimentos.length > ativos().length) {
+        <div class="inv-table-card">
+          <div class="inv-table-header">
+            <div class="inv-table-title">
+              <i class="bi bi-clock-history text-secondary me-2"></i> Histórico de Aplicações
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="inv-table">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Valor Aplicado</th>
+                  <th>Data Aplicação</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(inv of investimentos; track inv.id) {
+                  @if(inv.status !== 'ATIVA') {
+                    <tr class="inv-row-resgatado">
+                      <td><span class="inv-tag inv-tag-gray">{{ inv.tipoInvestimento }}</span></td>
+                      <td class="fw-semibold">{{ inv.valorAplicado | currency:'BRL':'symbol':'1.2-2' }}</td>
+                      <td class="text-muted">{{ inv.dataAplicacao | date:'dd/MM/yyyy' }}</td>
+                      <td><span class="inv-tag inv-tag-red">{{ inv.status }}</span></td>
+                    </tr>
+                  }
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+}
