@@ -24,7 +24,14 @@ export interface ClienteDTO {
   telefone?: TelefoneDTO;
 }
 
+export interface GerenteDTO{
+  id: number;
+  nome: string;
+  dataNascimento: string;
+}
+
 export interface ContaDTO {
+  idConta: number;
   numeroConta: string;
   saldo: number;
   dataAbertura: string;
@@ -39,6 +46,16 @@ export interface PerfilCompletoDTO {
   cliente: ClienteDTO;
   conta?: ContaDTO;
 }
+
+export interface PerfilGerenteCompletoDTO {
+  idUsuario: number;
+  email: string;
+  cpf: string;
+  perfil: string;
+  gerente: GerenteDTO;
+}
+
+export type ContaPendenteDTO = PerfilCompletoDTO;
 
 export interface LoginResponseDTO{
     idUsuario: number;

@@ -53,15 +53,23 @@ export class Login {
 
         console.log('ID salvo:', localStorage.getItem('idUsuarioLogado'));
 
-        this.router.navigate(['/dashboard']);
+        if(resposta.perfil === 'GERENTE') {
+          this.router.navigate(['/dashboard-gerente']);
+          console.log('Redirecionando para dashboard-gerente');
+        }else{
+          this.router.navigate(['/dashboard']);
+        } 
       },
       error: (err) => {
         this.carregando = false;
+        this.cdr.detectChanges();
         
         if (err.status === 401) {
           this.erroMensagem = 'Senha incorreta. Tente novamente.';
         } else if (err.status === 404) {
           this.erroMensagem = 'Este e-mail não está cadastrado no sistema.';
+        } else if(err.status === 403){
+          this.erroMensagem = 'Sua conta está pendente de aprovação. Por favor, aguarde o contato do IFBank.';
         } else {
           this.erroMensagem = 'Erro de conexão com o servidor do IFBank.';
         }
