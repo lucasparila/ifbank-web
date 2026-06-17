@@ -1,0 +1,80 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<body class="saque-body">
+
+  <div class="container" style="max-width: 480px; padding-top: 60px;">
+
+    <!-- Loading -->
+    <div *ngIf="carregando" class="text-center text-white">
+      <div class="spinner-border" role="status"></div>
+      <p class="mt-2">Carregando...</p>
+    </div>
+
+    <ng-container *ngIf="!carregando">
+
+      <div class="text-center mb-3">
+        <span class="badge-pill-custom">
+          <i class="bi bi-cash-stack me-1"></i> Área de Saques
+        </span>
+      </div>
+
+      <div class="card-modern">
+
+        <h3 class="text-center mb-2">Realizar Saque</h3>
+
+        <p class="text-center text-muted mb-4">
+          Saldo disponível: <strong>R$ {{ perfil.conta?.saldo | number:'1.2-2' }}</strong><br>
+          <small>Conta {{ perfil.conta?.numeroConta }}</small>
+        </p>
+
+        <!-- Formulário -->
+        <div class="mb-3">
+          <label for="valor" class="form-label">Valor do saque</label>
+          <div class="input-group">
+            <span class="input-group-text">R$</span>
+            <input
+              type="number"
+              id="valor"
+              step="0.01"
+              min="0.01"
+              class="form-control"
+              placeholder="0,00"
+              [(ngModel)]="valor"
+            />
+          </div>
+          <small class="text-muted mt-1 d-block">
+            Limite disponível: R$ {{ perfil.conta?.saldo | number:'1.2-2':'pt' }}
+          </small>
+        </div>
+
+        <button
+          class="btn btn-danger-custom w-100 mt-2"
+          (click)="sacar()"
+          [disabled]="processando"
+        >
+          <span *ngIf="processando" class="spinner-border spinner-border-sm me-2"></span>
+          <i *ngIf="!processando" class="bi bi-arrow-up-circle-fill me-2"></i>
+          {{ processando ? 'Processando...' : 'Sacar' }}
+        </button>
+
+        <a routerLink="/dashboard" class="btn btn-outline-secondary w-100 mt-3">
+          Voltar
+        </a>
+
+        <!-- Mensagem de feedback -->
+        <div *ngIf="mensagem" class="alert mt-3" [ngClass]="'alert-' + tipoMensagem">
+          <i class="bi me-2" [ngClass]="tipoMensagem === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'"></i>
+          {{ mensagem }}
+        </div>
+
+      </div>
+
+      <footer class="text-center mt-4 text-white opacity-50" style="font-size:13px;">
+        IFBank • Tecnologia e segurança para o seu dinheiro.
+      </footer>
+
+    </ng-container>
+  </div>
+
+</body>

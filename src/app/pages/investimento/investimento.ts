@@ -68,7 +68,7 @@ export class Investimento implements OnInit {
           return;
         }
         // Usa o id da conta que virá do ContaDTO (veja nota abaixo)
-        this.contaId = (dados.conta as any).id;
+        this.contaId = dados.conta!.id;
         this.carregarTudo();
       },
       error: () => {
