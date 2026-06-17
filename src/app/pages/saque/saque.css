@@ -1,0 +1,69 @@
+.saque-body {
+  background: radial-gradient(circle at top left, #ff4c4c22, #dc354511 40%, #1a0a0a 100%), #f5f7fc;
+  min-height: 100vh;
+  padding: 22px;
+  font-family: 'Inter', sans-serif;
+}
+
+.badge-pill-custom {
+  background: #dc354512;
+  color: #dc3545;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.card-modern {
+  background: linear-gradient(135deg, #ffffff, #fff0f0);
+  border-radius: 22px;
+  padding: 32px;
+  border: 1px solid #dc354525;
+  box-shadow: 0 18px 50px #dc354533;
+}
+
+.card-modern h3 {
+  font-weight: 800;
+  color: #57000a;
+}
+
+.form-control,
+.input-group-text {
+  border-radius: 14px !important;
+  padding: 10px 12px;
+  border: 1px solid #cfd4e0;
+}
+
+.form-control:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.15rem #dc354540;
+}
+
+.btn-danger-custom {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 26px #dc354555;
+  transition: all 0.2s;
+}
+
+.btn-danger-custom:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px #dc354550;
+  background: #bb2d3b;
+  color: white;
+}
+
+.btn-danger-custom:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-outline-secondary {
+  border-radius: 14px;
+  padding: 12px;
+  font-weight: 600;
+}

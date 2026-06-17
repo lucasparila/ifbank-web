@@ -31,7 +31,7 @@ export interface GerenteDTO{
 }
 
 export interface ContaDTO {
-  idConta: number;
+  id: number;
   numeroConta: string;
   saldo: number;
   dataAbertura: string;
