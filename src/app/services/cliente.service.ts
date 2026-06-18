@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class ClienteService {
   private readonly API_URL = 'http://localhost:8080/api';
   constructor(private http: HttpClient) {}
+
   obterPerfilCompleto(idUsuario: number): Observable<PerfilCompletoDTO> {
     return this.http.get<PerfilCompletoDTO>(`${this.API_URL}/clientes/${idUsuario}`);
   }
@@ -23,5 +24,15 @@ export class ClienteService {
     return this.http.post(`${this.API_URL}/clientes`, formData, { responseType: 'text' });
   }
 
-}
+  atualizarPerfil(idUsuario: number, formData: FormData): Observable<PerfilCompletoDTO> {
+    return this.http.put<PerfilCompletoDTO>(`${this.API_URL}/clientes/${idUsuario}`, formData);
+  }
 
+  esqueciSenha(email: string): Observable<string> {
+    return this.http.post(`${this.API_URL}/auth/esqueci-senha`, { email }, { responseType: 'text' });
+  }
+
+  resetarSenha(token: string, novaSenha: string): Observable<string> {
+    return this.http.post(`${this.API_URL}/auth/resetar-senha`, { token, novaSenha }, { responseType: 'text' });
+  }
+}
