@@ -1,0 +1,184 @@
+<!-- NOVO ARQUIVO: src/app/pages/extrato/extrato.html -->
+
+<!-- NAVBAR -->
+<nav class="navbar-modern">
+  <div class="nav-inner">
+    <a routerLink="/dashboard" class="nav-brand">IFBank</a>
+    <div class="nav-right">
+      <span class="nav-greeting">Olá, <strong>{{ nomeUsuario }}</strong></span>
+      <button (click)="logout()" class="btn-logout">
+        <i class="bi bi-box-arrow-right"></i> Sair
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <a routerLink="/dashboard" class="btn-back">
+        <i class="bi bi-arrow-left"></i> Voltar
+      </a>
+      <h1 class="page-title">Extrato</h1>
+      <p class="page-sub">
+        Conta <strong>{{ numeroConta }}</strong>
+        @if (paginacao) {
+          · {{ paginacao.totalElements }} movimentaç{{ paginacao.totalElements === 1 ? 'ão' : 'ões' }}
+        }
+      </p>
+    </div>
+    <div class="page-header-icon"><i class="bi bi-receipt-cutoff"></i></div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- FILTROS -->
+  <div class="filtros-card">
+    <div class="filtros-row">
+      <div class="filtro-group">
+        <label>Buscar</label>
+        <div class="input-icon-wrap">
+          <i class="bi bi-search input-icon"></i>
+          <input
+            type="text"
+            [(ngModel)]="filtroNome"
+            (keyup.enter)="aplicarFiltros()"
+            placeholder="Tipo, nome ou e-mail..."
+            class="filtro-input" />
+        </div>
+      </div>
+
+      <div class="filtro-group filtro-sm">
+        <label>Valor exato</label>
+        <div class="input-icon-wrap">
+          <i class="bi bi-currency-dollar input-icon"></i>
+          <input
+            type="number"
+            [(ngModel)]="filtroValor"
+            (keyup.enter)="aplicarFiltros()"
+            placeholder="0,00"
+            min="0"
+            class="filtro-input" />
+        </div>
+      </div>
+
+      <div class="filtro-group filtro-sm">
+        <label>Ordenar por</label>
+        <select [(ngModel)]="ordenacao" class="filtro-select">
+          <option value="dataMovimento">Data</option>
+          <option value="valor">Valor</option>
+          <option value="tipoMovimento">Tipo</option>
+        </select>
+      </div>
+
+      <div class="filtro-group filtro-sm">
+        <label>Direção</label>
+        <select [(ngModel)]="direcao" class="filtro-select">
+          <option value="DESC">Mais recente</option>
+          <option value="ASC">Mais antigo</option>
+        </select>
+      </div>
+
+      <div class="filtros-btns">
+        <button (click)="aplicarFiltros()" class="btn-filtrar">
+          <i class="bi bi-funnel-fill"></i> Filtrar
+        </button>
+        <button (click)="limparFiltros()" class="btn-limpar">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  @if (carregando) {
+  <div class="loading-wrap">
+    <div class="spinner-border text-primary" role="status"></div>
+    <span>Carregando extrato...</span>
+  </div>
+  }
+
+  <!-- ERRO -->
+  @if (!carregando && erro) {
+  <div class="alert-erro">
+    <i class="bi bi-exclamation-triangle-fill"></i> {{ erro }}
+  </div>
+  }
+
+  <!-- CONTEÚDO -->
+  @if (!carregando && !erro) {
+
+    @if (movimentacoes.length === 0) {
+    <div class="empty-state">
+      <i class="bi bi-inbox"></i>
+      <p>Nenhuma movimentação encontrada.</p>
+      @if (filtroNome || filtroValor) {
+        <button (click)="limparFiltros()" class="btn-limpar-empty">Limpar filtros</button>
+      }
+    </div>
+    }
+
+    @if (movimentacoes.length > 0) {
+    <div class="movimentacoes-list">
+      @for (mov of movimentacoes; track mov.id) {
+      <div class="mov-card" [class.credito]="isCredito(mov)" [class.debito]="!isCredito(mov)">
+
+        <div class="mov-icon-wrap" [class.bg-credito]="isCredito(mov)" [class.bg-debito]="!isCredito(mov)">
+          <i class="bi {{ iconeMovimento(mov.tipoMovimento) }}"></i>
+        </div>
+
+        <div class="mov-info">
+          <span class="mov-tipo">{{ labelTipo(mov.tipoMovimento) }}</span>
+          <span class="mov-meta">
+            {{ formatarData(mov.dataMovimento) }}
+            @if (mov.contaDestino) {
+              · Conta {{ mov.contaDestino }}
+            }
+          </span>
+        </div>
+
+        <div class="mov-right">
+          <span class="mov-valor" [class.valor-credito]="isCredito(mov)" [class.valor-debito]="!isCredito(mov)">
+            {{ formatarValor(mov) }}
+          </span>
+          @if (mov.saldoAtualizado != null) {
+            <span class="mov-saldo">Saldo: {{ mov.saldoAtualizado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+          }
+        </div>
+
+      </div>
+      }
+    </div>
+
+    <!-- PAGINAÇÃO -->
+    @if (paginacao.totalPages > 1) {
+    <div class="paginacao">
+      <button class="btn-page" (click)="irParaPagina(paginaAtual - 1)" [disabled]="paginacao.first">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      @for (p of paginasVisiveis; track p; let i = $index) {
+        @if (i > 0 && p - paginasVisiveis[i - 1] > 1) {
+          <span class="page-ellipsis">…</span>
+        }
+        <button class="btn-page" [class.ativo]="p === paginaAtual" (click)="irParaPagina(p)">
+          {{ p + 1 }}
+        </button>
+      }
+
+      <button class="btn-page" (click)="irParaPagina(paginaAtual + 1)" [disabled]="paginacao.last">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+
+    <p class="paginacao-info">
+      Página {{ paginaAtual + 1 }} de {{ paginacao.totalPages }} · {{ paginacao.totalElements }} registros
+    </p>
+    }
+
+    }
+  }
+
+</div>
