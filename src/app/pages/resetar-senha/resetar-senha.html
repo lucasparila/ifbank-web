@@ -1,0 +1,81 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="row w-100 justify-content-center">
+    <div class="col-12 col-md-5 col-lg-4">
+
+      <div class="card shadow border-0 rounded-4">
+        <div class="card-body p-5">
+
+          <div class="text-center mb-4">
+            <h2 class="text-primary fw-bold mb-1">IFBank</h2>
+            <p class="text-muted small mb-0">Redefinir senha</p>
+          </div>
+
+          <div *ngIf="mensagem" class="alert py-2 small shadow-sm mb-4"
+            [ngClass]="sucesso ? 'alert-success' : 'alert-danger'">
+            {{ mensagem }}
+          </div>
+
+          <form #resetarForm="ngForm" (ngSubmit)="resetar()">
+
+            <div class="mb-3">
+              <label for="novaSenha" class="form-label text-secondary small fw-medium">
+                Nova senha
+              </label>
+              <input
+                type="password"
+                id="novaSenha"
+                name="novaSenha"
+                class="form-control form-control-lg fs-6"
+                placeholder="••••••••"
+                [(ngModel)]="novaSenha"
+                [disabled]="carregando"
+                required
+              >
+            </div>
+
+            <div class="mb-4">
+              <label for="confirmarSenha" class="form-label text-secondary small fw-medium">
+                Confirmar nova senha
+              </label>
+              <input
+                type="password"
+                id="confirmarSenha"
+                name="confirmarSenha"
+                class="form-control form-control-lg fs-6"
+                placeholder="••••••••"
+                [(ngModel)]="confirmarSenha"
+                [disabled]="carregando"
+                required
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-100 fs-6 fw-semibold shadow-sm"
+              [disabled]="carregando || resetarForm.invalid"
+            >
+              <ng-container *ngIf="!carregando">
+                Redefinir senha
+              </ng-container>
+              <ng-container *ngIf="carregando">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Salvando...
+              </ng-container>
+            </button>
+
+          </form>
+
+          <div class="text-center mt-4">
+            <p class="text-muted small mb-0">
+              <a routerLink="/login" class="text-decoration-none text-primary fw-medium">
+                Voltar ao login
+              </a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
