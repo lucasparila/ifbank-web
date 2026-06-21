@@ -1,71 +1,71 @@
-<pre class="text-white">{{ dadosGerente | json }}</pre>
-<div class="bg-dark text-white py-3 shadow-sm sticky-top">
+<div class="ifb-gerente-navbar">
   <div class="container d-flex justify-content-between align-items-center">
-    <h2 class="h4 mb-0 fw-bold text-primary">IFBank <span class="text-white fw-light fs-6">| Painel de Controle</span></h2>
-    
+    <a class="ifb-navbar-brand" routerLink="/dashboard-gerente">
+      <span class="ifb-navbar-icon">🏦</span>
+      <span>IFBank <span class="ifb-navbar-sub">| Painel de Controle</span></span>
+    </a>
+
     @if(dadosGerente){
-        <div class="d-flex align-items-center gap-3">
-          <div class="text-end">
-            <span class="text-white small d-block fw-semibold">Olá, {{ dadosGerente.gerente.nome}}</span>
-            <span class="text-muted d-block" style="font-size: 0.75rem;">{{ dadosGerente.email }}</span>
-          </div>
-          
-          <span class="badge bg-danger text-uppercase p-2">Gerência</span>
-    
-          <button (click)="logoutGerente()" class="btn btn-outline-light btn-sm border-0">
-            <i class="bi bi-box-arrow-right fs-5"></i>
-          </button>
+      <div class="d-flex align-items-center gap-3">
+        <div class="text-end">
+          <span class="ifb-gerente-name">Olá, {{ dadosGerente.gerente.nome }}</span>
+          <span class="ifb-gerente-email">{{ dadosGerente.email }}</span>
         </div>
+
+        <span class="ifb-badge-gerencia">Gerência</span>
+
+        <button (click)="logoutGerente()" class="ifb-navbar-logout" title="Sair">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
+      </div>
     }
   </div>
 </div>
 
-<div class="container my-5">
-  </div>
+<div class="ifb-gerente-wrapper">
+  <div class="container ifb-gerente-content">
 
-<div class="container my-5">
-  
-  <div class="row mb-4">
-    <div class="col">
-      <h3 class="text-dark fw-bold mb-1">Aprovação de Contas</h3>
-      <p class="text-muted">Analise os dados dos novos clientes do Instituto Federal e aprove a abertura das contas correntes.</p>
+    <div class="row mb-4">
+      <div class="col">
+        <h3 class="ifb-page-title">Aprovação de Contas</h3>
+        <p class="ifb-page-subtitle">
+          Analise os dados dos novos clientes do Instituto Federal e aprove a abertura das contas correntes.
+        </p>
+      </div>
     </div>
-  </div>
 
-  @if(mensagemSucesso){
-    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i> {{ mensagemSucesso }}
-    </div>
-  }
-  
-  @if(mensagemErro){
-    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-        <i class="bi bi-exclamation-octagon-fill me-2"></i> {{ mensagemErro }}
-    </div>
-  }
- 
-  @if(carregando){    
-      <div class="text-center my-5">
+    @if(mensagemSucesso){
+      <div class="ifb-alert ifb-alert-success">
+        <i class="bi bi-check-circle-fill"></i> {{ mensagemSucesso }}
+      </div>
+    }
+
+    @if(mensagemErro){
+      <div class="ifb-alert ifb-alert-danger">
+        <i class="bi bi-exclamation-octagon-fill"></i> {{ mensagemErro }}
+      </div>
+    }
+
+    @if(carregando){
+      <div class="ifb-loading-inline">
         <div class="spinner-border text-primary" role="status"></div>
-        <p class="text-muted mt-2 small">Processando dados cadastrais...</p>
+        <p>Processando dados cadastrais...</p>
       </div>
-  }
+    }
 
-  @if(!carregando &&contasPendentes.length === 0){
-    <div class="card border-0 shadow-sm rounded-4 text-center py-5 bg-white">
-      <div class="card-body">
-        <i class="bi bi-shield-check text-success display-3 mb-3"></i>
-        <h5 class="fw-bold text-dark">Tudo em dia!</h5>
-        <p class="text-muted mb-0">Não existem contas pendentes de análise e aprovação neste momento.</p>
+    @if(!carregando && contasPendentes.length === 0){
+      <div class="ifb-empty-state">
+        <i class="bi bi-shield-check"></i>
+        <h5>Tudo em dia!</h5>
+        <p>Não existem contas pendentes de análise e aprovação neste momento.</p>
       </div>
-    </div>
-  }
-  
-  @if(!carregando && contasPendentes.length > 0){
-      <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    }
+
+    @if(!carregando && contasPendentes.length > 0){
+      <div class="ifb-table-card">
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
-            <thead class="table-light text-secondary small text-uppercase">
+            <thead>
               <tr>
                 <th class="ps-4">Cliente</th>
                 <th>CPF / E-mail</th>
@@ -74,53 +74,53 @@
                 <th class="text-center pe-4">Ações</th>
               </tr>
             </thead>
-            <tbody class="text-dark">
+            <tbody>
               <tr *ngFor="let item of contasPendentes">
-                
+
                 <td class="ps-4 py-3">
                   <div class="d-flex align-items-center gap-3">
-                    <img [src]="item.cliente.fotoUrl ? 'http://localhost:8080' + item.cliente.fotoUrl : 'assets/avatar-padrao.png'" 
-                         alt="Foto Cliente" 
-                         class="rounded-circle border border-2 border-secondary" 
-                         style="width: 45px; height: 45px; object-fit: cover;">
+                    <img [src]="item.cliente.fotoUrl ? 'http://localhost:8080' + item.cliente.fotoUrl : 'assets/avatar-padrao.png'"
+                         alt="Foto Cliente"
+                         class="ifb-table-avatar">
                     <div>
-                      <span class="d-block fw-bold text-dark mb-0">{{ item.cliente.nome }}</span>
-                      <span class="text-muted small">Cadastrado em: {{ item.cliente.dataCadastro | date:'dd/MM/yyyy' }}</span>
+                      <span class="ifb-table-name">{{ item.cliente.nome }}</span>
+                      <span class="ifb-table-date">Cadastrado em: {{ item.cliente.dataCadastro | date:'dd/MM/yyyy' }}</span>
                     </div>
                   </div>
                 </td>
-    
+
                 <td>
-                  <span class="d-block fw-medium small">{{ item.cpf }}</span>
-                  <span class="text-muted small d-block">{{ item.email }}</span>
+                  <span class="ifb-table-cpf">{{ item.cpf }}</span>
+                  <span class="ifb-table-email">{{ item.email }}</span>
                 </td>
-    
+
                 <td>
-                  <span *ngIf="item.cliente.endereco">
+                  <span *ngIf="item.cliente.endereco" class="ifb-table-location">
                     {{ item.cliente.endereco.cidade }} / {{ item.cliente.endereco.estado }}
                   </span>
                   <span *ngIf="!item.cliente.endereco" class="text-muted small">—</span>
                 </td>
-    
+
                 <td>
-                  <code class="text-primary fw-bold bg-primary-subtle px-2 py-1 rounded small">
+                  <code class="ifb-table-conta">
                     {{ item.conta?.numeroConta || 'Não gerada' }}
                   </code>
                 </td>
-    
+
                 <td class="text-center pe-4">
-                  <button (click)="confirmarAprovacao(item.conta?.id, item.cliente.nome)" 
-                          class="btn btn-success btn-sm d-inline-flex align-items-center gap-2 px-3 py-2 shadow-sm fw-semibold">
+                  <button (click)="confirmarAprovacao(item.conta?.id, item.cliente.nome)"
+                          class="ifb-btn-approve">
                     <i class="bi bi-check-circle"></i>
                     Aprovar Conta
                   </button>
                 </td>
-    
+
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-  }
+    }
 
+  </div>
 </div>
