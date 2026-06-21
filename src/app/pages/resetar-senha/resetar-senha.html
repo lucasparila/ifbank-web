@@ -1,81 +1,117 @@
-<div class="container d-flex align-items-center justify-content-center min-vh-100">
-  <div class="row w-100 justify-content-center">
-    <div class="col-12 col-md-5 col-lg-4">
+<div class="ifb-wrapper">
 
-      <div class="card shadow border-0 rounded-4">
-        <div class="card-body p-5">
+  <div class="ifb-card">
 
-          <div class="text-center mb-4">
-            <h2 class="text-primary fw-bold mb-1">IFBank</h2>
-            <p class="text-muted small mb-0">Redefinir senha</p>
-          </div>
+    <!-- LOGO -->
+    <div class="ifb-logo">
+      <span class="ifb-logo-icon">🏦</span>
+      <span class="ifb-logo-text">IFBank</span>
+    </div>
 
-          <div *ngIf="mensagem" class="alert py-2 small shadow-sm mb-4"
-            [ngClass]="sucesso ? 'alert-success' : 'alert-danger'">
-            {{ mensagem }}
-          </div>
+    <!-- ─── TOKEN INVÁLIDO ─── -->
+    <ng-container *ngIf="!token">
+      <div class="ifb-success-icon">❌</div>
+      <div class="ifb-header">
+        <h2 class="ifb-title">Link inválido</h2>
+        <p class="ifb-subtitle">Este link de recuperação é inválido ou já expirou.</p>
+      </div>
+      <a routerLink="/esqueci-senha" class="ifb-btn-primary" style="text-align:center; text-decoration:none; display:block;">
+        Solicitar novo link
+      </a>
+    </ng-container>
 
-          <form #resetarForm="ngForm" (ngSubmit)="resetar()">
+    <!-- ─── FORMULÁRIO ─── -->
+    <ng-container *ngIf="token && !redefinido">
 
-            <div class="mb-3">
-              <label for="novaSenha" class="form-label text-secondary small fw-medium">
-                Nova senha
-              </label>
-              <input
-                type="password"
-                id="novaSenha"
-                name="novaSenha"
-                class="form-control form-control-lg fs-6"
-                placeholder="••••••••"
-                [(ngModel)]="novaSenha"
-                [disabled]="carregando"
-                required
-              >
-            </div>
-
-            <div class="mb-4">
-              <label for="confirmarSenha" class="form-label text-secondary small fw-medium">
-                Confirmar nova senha
-              </label>
-              <input
-                type="password"
-                id="confirmarSenha"
-                name="confirmarSenha"
-                class="form-control form-control-lg fs-6"
-                placeholder="••••••••"
-                [(ngModel)]="confirmarSenha"
-                [disabled]="carregando"
-                required
-              >
-            </div>
-
-            <button
-              type="submit"
-              class="btn btn-primary btn-lg w-100 fs-6 fw-semibold shadow-sm"
-              [disabled]="carregando || resetarForm.invalid"
-            >
-              <ng-container *ngIf="!carregando">
-                Redefinir senha
-              </ng-container>
-              <ng-container *ngIf="carregando">
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Salvando...
-              </ng-container>
-            </button>
-
-          </form>
-
-          <div class="text-center mt-4">
-            <p class="text-muted small mb-0">
-              <a routerLink="/login" class="text-decoration-none text-primary fw-medium">
-                Voltar ao login
-              </a>
-            </p>
-          </div>
-
-        </div>
+      <div class="ifb-header">
+        <h2 class="ifb-title">Redefinir senha</h2>
+        <p class="ifb-subtitle">Escolha uma nova senha para sua conta IFBank.</p>
       </div>
 
+      <div *ngIf="mensagemErro" class="ifb-alert ifb-alert-danger">
+        <span class="ifb-alert-icon">⚠️</span>
+        {{ mensagemErro }}
+      </div>
+
+      <form #resetarForm="ngForm" (ngSubmit)="resetar()">
+
+        <div class="ifb-field">
+          <label for="novaSenha" class="ifb-label">Nova senha</label>
+          <input
+            type="password"
+            id="novaSenha"
+            name="novaSenha"
+            class="ifb-input"
+            placeholder="Mínimo 6 caracteres"
+            [(ngModel)]="novaSenha"
+            [attr.disabled]="carregando || null"
+            autocomplete="new-password"
+            minlength="6"
+            required>
+          <div class="ifb-password-strength" *ngIf="novaSenha">
+            <div class="ifb-strength-bar">
+              <div class="ifb-strength-fill" [style.width.%]="forcaSenha.pct" [style.background]="forcaSenha.cor"></div>
+            </div>
+            <span class="ifb-strength-label" [style.color]="forcaSenha.cor">{{ forcaSenha.label }}</span>
+          </div>
+        </div>
+
+        <div class="ifb-field">
+          <label for="confirmarSenha" class="ifb-label">Confirmar nova senha</label>
+          <input
+            type="password"
+            id="confirmarSenha"
+            name="confirmarSenha"
+            class="ifb-input"
+            [class.ifb-input-error]="confirmarSenha && novaSenha !== confirmarSenha"
+            placeholder="••••••••"
+            [(ngModel)]="confirmarSenha"
+            [attr.disabled]="carregando || null"
+            autocomplete="new-password"
+            required>
+          <span *ngIf="confirmarSenha && novaSenha !== confirmarSenha" class="ifb-field-hint ifb-hint-error">
+            As senhas não coincidem
+          </span>
+        </div>
+
+        <button
+          type="submit"
+          class="ifb-btn-primary"
+          [disabled]="carregando || resetarForm.invalid || novaSenha !== confirmarSenha">
+          <span *ngIf="!carregando">Salvar nova senha</span>
+          <span *ngIf="carregando" class="ifb-btn-loading">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Salvando...
+          </span>
+        </button>
+
+      </form>
+
+    </ng-container>
+
+    <!-- ─── SUCESSO ─── -->
+    <ng-container *ngIf="token && redefinido">
+
+      <div class="ifb-success-icon">✅</div>
+
+      <div class="ifb-header">
+        <h2 class="ifb-title">Senha redefinida!</h2>
+        <p class="ifb-subtitle">
+          Sua senha foi atualizada com sucesso. Redirecionando para o login em
+          <strong>{{ contagemRedirect }}s</strong>...
+        </p>
+      </div>
+
+      <a routerLink="/login" class="ifb-btn-primary" style="text-align:center; text-decoration:none; display:block;">
+        Ir para o login agora
+      </a>
+
+    </ng-container>
+
+    <div class="ifb-footer">
+      <a routerLink="/login" class="ifb-link">← Voltar ao login</a>
     </div>
+
   </div>
+
 </div>
