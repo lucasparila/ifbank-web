@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
@@ -11,13 +11,17 @@ import { ClienteService } from '../../services/cliente.service';
   templateUrl: './resetar-senha.html',
   styleUrl: './resetar-senha.css'
 })
-export class ResetarSenha implements OnInit {
+export class ResetarSenha implements OnInit, OnDestroy {
+
   novaSenha = '';
   confirmarSenha = '';
   token = '';
   carregando = false;
-  mensagem = '';
-  sucesso = false;
+  mensagemErro = '';
+  redefinido = false;
+  contagemRedirect = 5;
+
+  private redirectInterval: any;
 
   constructor(
     private clienteService: ClienteService,
@@ -25,35 +29,63 @@ export class ResetarSenha implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
-    if (!this.token) {
-      this.mensagem = 'Token inválido ou expirado.';
-    }
   }
 
-  resetar() {
+  get forcaSenha(): { pct: number; cor: string; label: string } {
+    const s = this.novaSenha;
+    if (!s) return { pct: 0, cor: '#dee2e6', label: '' };
+    let score = 0;
+    if (s.length >= 6) score++;
+    if (s.length >= 10) score++;
+    if (/[A-Z]/.test(s)) score++;
+    if (/[0-9]/.test(s)) score++;
+    if (/[^A-Za-z0-9]/.test(s)) score++;
+
+    if (score <= 1) return { pct: 25,  cor: '#dc3545', label: 'Fraca' };
+    if (score === 2) return { pct: 50,  cor: '#fd7e14', label: 'Regular' };
+    if (score === 3) return { pct: 75,  cor: '#ffc107', label: 'Boa' };
+    return               { pct: 100, cor: '#198754', label: 'Forte' };
+  }
+
+  resetar(): void {
     if (this.novaSenha !== this.confirmarSenha) {
-      this.sucesso = false;
-      this.mensagem = 'As senhas não coincidem.';
+      this.mensagemErro = 'As senhas não coincidem.';
+      return;
+    }
+    if (this.novaSenha.length < 6) {
+      this.mensagemErro = 'A senha deve ter pelo menos 6 caracteres.';
       return;
     }
 
     this.carregando = true;
-    this.mensagem = '';
+    this.mensagemErro = '';
 
     this.clienteService.resetarSenha(this.token, this.novaSenha).subscribe({
       next: () => {
-        this.sucesso = true;
-        this.mensagem = 'Senha redefinida com sucesso!';
         this.carregando = false;
-        setTimeout(() => this.router.navigate(['/login']), 2000);
+        this.redefinido = true;
+        this.iniciarRedirect();
       },
       error: (err) => {
-        this.sucesso = false;
-        this.mensagem = err.error || 'Erro ao redefinir senha. Tente novamente.';
         this.carregando = false;
+        this.mensagemErro = err?.error?.message || err?.error || 'Erro ao redefinir senha. O link pode ter expirado.';
       }
     });
+  }
+
+  private iniciarRedirect(): void {
+    this.redirectInterval = setInterval(() => {
+      this.contagemRedirect--;
+      if (this.contagemRedirect <= 0) {
+        clearInterval(this.redirectInterval);
+        this.router.navigate(['/login']);
+      }
+    }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.redirectInterval);
   }
 }
