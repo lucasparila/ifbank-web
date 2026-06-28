@@ -21,4 +21,8 @@ export class GerenteService {
   aprovarConta(idConta: number): Observable<string> {
     return this.http.put(`${this.API_URL}/aprovar-conta/${idConta}`, {}, { responseType: 'text' });
   }
+
+  reprovarConta(idConta: number): Observable<string> {
+    return this.http.put(`${this.API_URL}/reprovar-conta/${idConta}`, {}, { responseType: 'text' });
+  }
 }

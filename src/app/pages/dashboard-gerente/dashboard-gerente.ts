@@ -100,6 +100,30 @@ export class DashboardGerente implements OnInit {
       });
   }
 
+  confirmarReprovacao(idConta: number | undefined, nomeCliente: string): void {
+     console.log('clicou', idConta, nomeCliente);
+    if (!idConta) return;
+
+    this.carregando = true;
+    this.mensagemSucesso = '';
+    this.mensagemErro = '';
+
+    this.gerenteService.reprovarConta(idConta)
+      .pipe(
+        finalize(() => { this.carregando = false; this.cdr.detectChanges(); }))
+      .subscribe({
+        next: (resposta) => {
+          this.mensagemSucesso = `A conta de ${nomeCliente} foi reprovada com sucesso!`;
+          this.carregarPendencias();
+        },
+        error: (err) => {
+          this.mensagemErro = 'Falha ao tentar reprovar a conta do cliente.';
+          console.error(err);
+          this.cdr.detectChanges();
+        }
+      });
+  }
+
   logoutGerente(): void {
     localStorage.removeItem('idUsuarioLogado');
     this.router.navigate(['/login']); 
