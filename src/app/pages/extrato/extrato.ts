@@ -160,6 +160,47 @@ export class Extrato implements OnInit {
     return 'bi-circle-fill';
   }
 
+  baixarPdf(): void {
+  if (!this.idConta) return;
+
+  const params: any = {};
+
+  if (this.filtroNome && this.filtroNome.trim() !== '') {
+    params.nome = this.filtroNome;
+  }
+
+  if (this.filtroValor !== null && this.filtroValor !== undefined) {
+    params.valor = this.filtroValor;
+  }
+
+  if (this.ordenacao) {
+    params.ordenacao = this.ordenacao;
+  }
+
+  if (this.direcao) {
+    params.direcao = this.direcao;
+  }
+
+  this.extratoService.baixarPdf(this.idConta, params).subscribe({
+    next: (blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `extrato-conta-${this.numeroConta}.pdf`;
+
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    },
+    error: () => {
+      this.erro = 'Erro ao gerar PDF do extrato.';
+    }
+  });
+}
+
   logout(): void {
     localStorage.removeItem('idUsuarioLogado');
     this.router.navigate(['/login']);
