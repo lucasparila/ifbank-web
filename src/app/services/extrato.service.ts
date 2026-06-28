@@ -37,4 +37,23 @@ export class ExtratoService {
       { params }
     );
   }
+  baixarPdf(idConta: number, filtros: any) {
+
+  let params = new HttpParams()
+    .set('nome', filtros.nome ?? '')
+    .set('ordenacao', filtros.ordenacao ?? 'dataMovimento')
+    .set('direcao', filtros.direcao ?? 'DESC');
+
+  if (filtros.valor !== null && filtros.valor !== undefined) {
+    params = params.set('valor', filtros.valor.toString());
+  }
+
+  return this.http.get(
+    `${this.API_URL}/extratos/${idConta}/pdf`,
+    {
+      params,
+      responseType: 'blob'
+    }
+  );
+}
 }
