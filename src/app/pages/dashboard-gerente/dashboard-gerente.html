@@ -107,6 +107,14 @@
                   </code>
                 </td>
 
+                 <td class="text-center pe-4">
+                  <button (click)="confirmarReprovacao(item.conta?.id, item.cliente.nome)"
+                          class="ifb-btn-reject">
+                    <i class="bi bi-ban"></i>
+                    Reprovar Conta
+                  </button>
+                </td>
+
                 <td class="text-center pe-4">
                   <button (click)="confirmarAprovacao(item.conta?.id, item.cliente.nome)"
                           class="ifb-btn-approve">

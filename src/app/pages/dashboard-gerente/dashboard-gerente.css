@@ -267,3 +267,27 @@
   filter: brightness(1.08);
   transform: translateY(-1px);
 }
+
+.ifb-btn-reject {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #b41515;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px #19875433;
+  transition: filter 0.2s, transform 0.15s;
+}
+
+.ifb-btn-reject:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+
+
