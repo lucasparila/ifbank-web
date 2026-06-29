@@ -9,20 +9,7 @@
 @if(!carregando) {
   <div class="inv-wrapper">
 
-    <!-- NAVBAR -->
-    <nav class="inv-navbar">
-      <a routerLink="/home" class="inv-brand">IFBank</a>
-      <div class="inv-nav-right">
-        <span class="inv-greeting">Olá, <strong>{{ perfil.cliente.nome }}</strong></span>
-        <img
-          [src]="perfil.cliente.fotoUrl ? 'http://localhost:8080' + perfil.cliente.fotoUrl : 'assets/avatar-padrao.png'"
-          alt="Foto" class="inv-avatar"
-        >
-        <button (click)="logout()" class="inv-logout" title="Sair">
-          <i class="bi bi-box-arrow-right"></i>
-        </button>
-      </div>
-    </nav>
+    <app-navbar />
 
     <div class="inv-container">
 
@@ -35,9 +22,6 @@
           <h1 class="inv-page-title">Seus Investimentos</h1>
           <p class="inv-page-sub">Aplique, acompanhe e resgate seus rendimentos com segurança.</p>
         </div>
-        <a routerLink="/dashboard" class="inv-btn-back">
-          <i class="bi bi-arrow-left-short"></i> Voltar ao Dashboard
-        </a>
       </div>
 
       <!-- ALERTS -->

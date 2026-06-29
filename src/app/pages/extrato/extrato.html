@@ -1,23 +1,10 @@
 
-<nav class="navbar-modern">
-  <div class="nav-inner">
-    <a routerLink="/dashboard" class="nav-brand">IFBank</a>
-    <div class="nav-right">
-      <span class="nav-greeting">Olá, <strong>{{ nomeUsuario }}</strong></span>
-      <button (click)="logout()" class="btn-logout">
-        <i class="bi bi-box-arrow-right"></i> Sair
-      </button>
-    </div>
-  </div>
-</nav>
-
+<!-- ─── NAVBAR ─── -->
+<app-navbar />
 
 <div class="page-header">
   <div class="page-header-inner">
     <div>
-      <a routerLink="/dashboard" class="btn-back">
-        <i class="bi bi-arrow-left"></i> Voltar
-      </a>
       <h1 class="page-title">Extrato</h1>
       <p class="page-sub">
         Conta <strong>{{ numeroConta }}</strong>

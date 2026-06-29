@@ -1,14 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ExtratoService } from '../../services/extrato.service';
 import { ClienteService } from '../../services/cliente.service';
 import { MovimentacaoResponseDTO, MovimentacaoPageDTO, ExtratoFiltros } from '../../models/extrato.model';
+import { NavbarComponent } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-extrato',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './extrato.html',
   styleUrl: './extrato.css',
 })
