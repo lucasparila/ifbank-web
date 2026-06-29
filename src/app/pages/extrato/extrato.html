@@ -1,9 +1,7 @@
-<!-- NOVO ARQUIVO: src/app/pages/extrato/extrato.html -->
 
 <!-- ─── NAVBAR ─── -->
 <app-navbar />
 
-<!-- PAGE HEADER -->
 <div class="page-header">
   <div class="page-header-inner">
     <div>
@@ -80,9 +78,37 @@
         </button>
       </div>
     </div>
+
+    <div class="filtros-row filtros-periodo">
+
+      <div class="filtro-group filtro-data">
+        <label>Data inicial</label>
+
+        <div class="input-icon-wrap">
+          <i class="bi bi-calendar-event input-icon"></i>
+
+          <input
+              type="date"
+              [(ngModel)]="dataInicio"
+              class="filtro-input">
+          </div>
+        </div>
+
+        <div class="filtro-group filtro-data">
+          <label>Data final</label>
+
+          <div class="input-icon-wrap">
+            <i class="bi bi-calendar-check input-icon"></i>
+
+            <input
+                type="date"
+                [(ngModel)]="dataFim"
+                class="filtro-input">
+          </div>
+        </div>
+    </div>
   </div>
 
-  <!-- LOADING -->
   @if (carregando) {
   <div class="loading-wrap">
     <div class="spinner-border text-primary" role="status"></div>
@@ -90,14 +116,14 @@
   </div>
   }
 
-  <!-- ERRO -->
+  
   @if (!carregando && erro) {
   <div class="alert-erro">
     <i class="bi bi-exclamation-triangle-fill"></i> {{ erro }}
   </div>
   }
 
-  <!-- CONTEÚDO -->
+
   @if (!carregando && !erro) {
 
     @if (movimentacoes.length === 0) {
@@ -142,7 +168,7 @@
       }
     </div>
 
-    <!-- PAGINAÇÃO -->
+
     @if (paginacao.totalPages > 1) {
     <div class="paginacao">
       <button class="btn-page" (click)="irParaPagina(paginaAtual - 1)" [disabled]="paginacao.first">

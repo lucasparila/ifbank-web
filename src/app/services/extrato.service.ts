@@ -31,6 +31,13 @@ export class ExtratoService {
     if (filtros.valor != null) {
       params = params.set('valor', filtros.valor.toString());
     }
+    if (filtros.dataInicio) {
+      params = params.set('dataInicio', filtros.dataInicio);
+    }
+
+    if (filtros.dataFim) {
+      params = params.set('dataFim', filtros.dataFim);
+    }
 
     return this.http.get<MovimentacaoPageDTO>(
       `${this.API_URL}/movimentacoes/${idConta}/extrato`,
@@ -46,6 +53,14 @@ export class ExtratoService {
 
   if (filtros.valor !== null && filtros.valor !== undefined) {
     params = params.set('valor', filtros.valor.toString());
+  }
+
+  if (filtros.dataInicio) {
+    params = params.set('dataInicio', filtros.dataInicio);
+  }
+
+  if (filtros.dataFim) {
+    params = params.set('dataFim', filtros.dataFim);
   }
 
   return this.http.get(
