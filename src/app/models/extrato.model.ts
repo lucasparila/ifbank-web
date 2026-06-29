@@ -28,4 +28,6 @@ export interface ExtratoFiltros {
   valor?: number | null;
   ordenacao: 'dataMovimento' | 'valor' | 'tipoMovimento';
   direcao: 'ASC' | 'DESC';
+  dataInicio?: string;
+  dataFim?: string;
 }

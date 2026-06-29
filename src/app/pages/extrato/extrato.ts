@@ -30,6 +30,8 @@ export class Extrato implements OnInit {
   filtroValor: number | null = null;
   ordenacao: 'dataMovimento' | 'valor' | 'tipoMovimento' = 'dataMovimento';
   direcao: 'ASC' | 'DESC' = 'DESC';
+  dataInicio?: string;
+  dataFim?: string;
 
   constructor(
     private extratoService: ExtratoService,
@@ -69,6 +71,8 @@ export class Extrato implements OnInit {
       valor: this.filtroValor,
       ordenacao: this.ordenacao,
       direcao: this.direcao,
+      dataInicio: this.dataInicio,
+      dataFim: this.dataFim,
     };
 
     this.extratoService
@@ -99,6 +103,8 @@ export class Extrato implements OnInit {
     this.ordenacao = 'dataMovimento';
     this.direcao = 'DESC';
     this.paginaAtual = 0;
+    this.dataInicio = '';
+    this.dataFim = '';
     this.carregarExtrato();
   }
 
@@ -128,7 +134,7 @@ export class Extrato implements OnInit {
 
   isCredito(mov: MovimentacaoResponseDTO): boolean {
     const t = mov.tipoMovimento?.toUpperCase() ?? '';
-    return t === 'DEPOSITO' || t === 'TRANSFERENCIA_RECEBIDA';
+    return t === 'DEPOSITO' || t === 'TRANSFERENCIA_RECEBIDA' || t === 'RESGATE_INVESTIMENTO';
   }
 
   formatarValor(mov: MovimentacaoResponseDTO): string {
@@ -147,6 +153,8 @@ export class Extrato implements OnInit {
       SAQUE: 'Saque',
       TRANSFERENCIA_ENVIADA: 'Transferência enviada',
       TRANSFERENCIA_RECEBIDA: 'Transferência recebida',
+      APLICACAO_INVESTIMENTO: 'Aplicação em investimento',
+      RESGATE_INVESTIMENTO: 'Resgate de Investimento',
     };
     return map[tipo?.toUpperCase()] ?? tipo;
   }
@@ -157,6 +165,8 @@ export class Extrato implements OnInit {
     if (t === 'SAQUE') return 'bi-arrow-up-circle-fill';
     if (t === 'TRANSFERENCIA_ENVIADA') return 'bi-arrow-right-circle-fill';
     if (t === 'TRANSFERENCIA_RECEBIDA') return 'bi-arrow-left-circle-fill';
+    if (t === 'APLICACAO_INVESTIMENTO') return 'bi-graph-down-arrow';
+    if (t === 'RESGATE_INVESTIMENTO') return 'bi-graph-up-arrow';
     return 'bi-circle-fill';
   }
 
@@ -181,6 +191,13 @@ export class Extrato implements OnInit {
     params.direcao = this.direcao;
   }
 
+  if( this.dataInicio) {
+    params.dataInicio = this.dataInicio;
+  }
+
+  if( this.dataFim) {
+    params.dataFim = this.dataFim;
+  }
   this.extratoService.baixarPdf(this.idConta, params).subscribe({
     next: (blob: Blob) => {
       const url = window.URL.createObjectURL(blob);

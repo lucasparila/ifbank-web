@@ -135,6 +135,15 @@
 }
 .btn-limpar:hover { background: #fee2e2; color: #dc2626; border-color: #dc2626; }
 
+.filtros-periodo{
+    margin-top:18px;
+    gap:18px;
+}
+
+.filtro-data{
+    min-width:220px;
+}
+
 /* ========== ESTADOS ========== */
 .loading-wrap {
   display: flex; align-items: center; justify-content: center;
