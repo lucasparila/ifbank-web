@@ -69,7 +69,7 @@ export class Login {
         } else if (err.status === 404) {
           this.erroMensagem = 'Este e-mail não está cadastrado no sistema.';
         } else if(err.status === 403){
-          this.erroMensagem = 'Sua conta está pendente de aprovação. Por favor, aguarde o contato do IFBank.';
+          this.erroMensagem = 'Sua conta não está liberada para acesso. Por favor, aguarde o contato do IFBank.';
         } else {
           this.erroMensagem = 'Erro de conexão com o servidor do IFBank.';
         }

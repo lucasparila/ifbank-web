@@ -27,12 +27,24 @@
 
     <div class="row mb-4">
       <div class="col">
-        <h3 class="ifb-page-title">Aprovação de Contas</h3>
+        <h3 class="ifb-page-title">Análise de Contas</h3>
         <p class="ifb-page-subtitle">
-          Analise os dados dos novos clientes do Instituto Federal e aprove a abertura das contas correntes.
+          Analise os dados dos clientes do Instituto Federal e gerencie o status das contas correntes.
         </p>
       </div>
     </div>
+
+    <!-- Abas -->
+    <ul class="nav nav-tabs ifb-tabs mb-4">
+      <li class="nav-item" *ngFor="let aba of abas">
+        <button
+          class="nav-link"
+          [class.active]="abaAtiva === aba.status"
+          (click)="trocarAba(aba.status)">
+          {{ aba.label }}
+        </button>
+      </li>
+    </ul>
 
     @if(mensagemSucesso){
       <div class="ifb-alert ifb-alert-success">
@@ -53,15 +65,15 @@
       </div>
     }
 
-    @if(!carregando && contasPendentes.length === 0){
+    @if(!carregando && pagina && pagina.content.length === 0){
       <div class="ifb-empty-state">
         <i class="bi bi-shield-check"></i>
-        <h5>Tudo em dia!</h5>
-        <p>Não existem contas pendentes de análise e aprovação neste momento.</p>
+        <h5>Nada por aqui!</h5>
+        <p>Não existem contas nesta categoria neste momento.</p>
       </div>
     }
 
-    @if(!carregando && contasPendentes.length > 0){
+    @if(!carregando && pagina && pagina.content.length > 0){
       <div class="ifb-table-card">
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
@@ -75,13 +87,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of contasPendentes">
+              <tr *ngFor="let item of pagina.content">
 
                 <td class="ps-4 py-3">
                   <div class="d-flex align-items-center gap-3">
-                    <img [src]="item.cliente.fotoUrl ? 'http://localhost:8080' + item.cliente.fotoUrl : 'assets/avatar-padrao.png'"
-                         alt="Foto Cliente"
-                         class="ifb-table-avatar">
+                    <img [src]="item.cliente.fotoUrl ? 'http://localhost:8080' + item.cliente.fotoUrl : 'avatar-padrao.svg'"
+                      (error)="onImagemErro($event)"
+                      alt="Foto Cliente"
+                      class="ifb-table-avatar">
                     <div>
                       <span class="ifb-table-name">{{ item.cliente.nome }}</span>
                       <span class="ifb-table-date">Cadastrado em: {{ item.cliente.dataCadastro | date:'dd/MM/yyyy' }}</span>
@@ -107,25 +120,42 @@
                   </code>
                 </td>
 
-                 <td class="text-center pe-4">
-                  <button (click)="confirmarReprovacao(item.conta?.id, item.cliente.nome)"
-                          class="ifb-btn-reject">
-                    <i class="bi bi-ban"></i>
-                    Reprovar Conta
-                  </button>
-                </td>
-
                 <td class="text-center pe-4">
-                  <button (click)="confirmarAprovacao(item.conta?.id, item.cliente.nome)"
-                          class="ifb-btn-approve">
-                    <i class="bi bi-check-circle"></i>
-                    Aprovar Conta
-                  </button>
+                  <div class="d-flex gap-2 justify-content-center">
+                    <button *ngIf="podeReprovar()"
+                            (click)="confirmarReprovacao(item.conta?.id, item.cliente.nome)"
+                            class="ifb-btn-reject">
+                      <i class="bi bi-ban"></i>
+                      Reprovar
+                    </button>
+
+                    <button *ngIf="podeAprovar()"
+                            (click)="confirmarAprovacao(item.conta?.id, item.cliente.nome)"
+                            class="ifb-btn-approve">
+                      <i class="bi bi-check-circle"></i>
+                      {{ abaAtiva === 'REJEITADA' ? 'Aprovar (Reanálise)' : 'Aprovar' }}
+                    </button>
+                  </div>
                 </td>
 
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- Paginação -->
+        <div class="ifb-pagination d-flex justify-content-between align-items-center px-4 py-3">
+          <span class="ifb-pagination-info">
+            Página {{ pagina.number + 1 }} de {{ pagina.totalPages }} ({{ pagina.totalElements }} no total)
+          </span>
+          <div class="d-flex gap-2">
+            <button class="ifb-btn-page" [disabled]="pagina.first" (click)="paginaAnterior()">
+              <i class="bi bi-chevron-left"></i> Anterior
+            </button>
+            <button class="ifb-btn-page" [disabled]="pagina.last" (click)="proximaPagina()">
+              Próxima <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
         </div>
       </div>
     }

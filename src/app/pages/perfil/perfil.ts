@@ -83,6 +83,19 @@ export class Perfil implements OnInit {
     }
   }
 
+  get fotoUrlCompleta(): string {
+    const foto = this.perfil?.cliente?.fotoUrl;
+    if (!foto) {
+      return 'avatar-padrao.svg';
+    }
+    return foto.startsWith('http') ? foto : 'http://localhost:8080' + foto;
+  }
+
+  onImagemErro(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'avatar-padrao.svg';
+  }
+
   salvar(): void {
     const idSessao = localStorage.getItem('idUsuarioLogado');
     if (!idSessao) return;

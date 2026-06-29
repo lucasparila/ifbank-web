@@ -63,3 +63,14 @@ export interface LoginResponseDTO{
     cpf: string;
     perfil: string;
 }
+
+export interface PaginaDTO<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;      
+  size: number;         
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+}

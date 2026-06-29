@@ -28,11 +28,12 @@
           <span class="ifb-gerente-email">Conta Corrente · {{ perfil.conta?.numeroConta }}</span>
         </div>
 
-        <img [src]="perfil.cliente.fotoUrl ? 'http://localhost:8080' + perfil.cliente.fotoUrl : 'assets/avatar-padrao.png'"
-             alt="Foto de Perfil"
-             class="ifb-navbar-avatar"
-             routerLink="/perfil"
-             style="cursor: pointer;">
+        <img [src]="fotoUrlCompleta"
+          (error)="onImagemErro($event)"
+          alt="Foto de Perfil"
+          class="ifb-navbar-avatar"
+          routerLink="/perfil"
+          style="cursor: pointer;">
 
         <button (click)="logout()" class="ifb-navbar-logout" title="Sair">
           <i class="bi bi-box-arrow-right"></i>

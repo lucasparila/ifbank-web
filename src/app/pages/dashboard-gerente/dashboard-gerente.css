@@ -289,5 +289,66 @@
   transform: translateY(-1px);
 }
 
+/* ════════════════════ ABAS ════════════════════ */
 
+.ifb-tabs {
+  border-bottom: 2px solid #e7ebf7;
+}
+
+.ifb-tabs .nav-link {
+  border: none;
+  background: transparent;
+  color: #7b8094;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 0;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.ifb-tabs .nav-link:hover {
+  color: #0a2a57;
+}
+
+.ifb-tabs .nav-link.active {
+  color: #0d6efd;
+  border-bottom: 3px solid #0d6efd;
+}
+
+/* ════════════════════ PAGINAÇÃO ════════════════════ */
+
+.ifb-pagination {
+  border-top: 1px solid #f0f2f9;
+  background: #fafbfe;
+}
+
+.ifb-pagination-info {
+  font-size: 13px;
+  color: #7b8094;
+}
+
+.ifb-btn-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid #e7ebf7;
+  color: #0a2a57;
+  border-radius: 10px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ifb-btn-page:hover:not(:disabled) {
+  background: #f5f7fc;
+}
+
+.ifb-btn-page:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 

@@ -51,8 +51,8 @@
 
         <div class="ifb-profile-identity">
           <div class="ifb-avatar-wrap">
-            <img
-              [src]="perfil.cliente.fotoUrl ? 'http://localhost:8080' + perfil.cliente.fotoUrl : 'assets/avatar-padrao.png'"
+            <img [src]="fotoUrlCompleta"
+              (error)="onImagemErro($event)"
               alt="Foto de Perfil"
               class="ifb-avatar"
             >
