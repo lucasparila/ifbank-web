@@ -2,12 +2,13 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { PerfilCompletoDTO } from '../../models/perfil.model';
 import { ClienteService } from '../../services/cliente.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { NavbarComponent } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-perfil',
-  imports: [CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NavbarComponent],
   templateUrl: './perfil.html',
   styleUrl: './perfil.css',
 })

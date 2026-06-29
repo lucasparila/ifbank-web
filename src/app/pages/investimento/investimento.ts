@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { InvestimentoService } from '../../services/investimento.service';
 import { PerfilCompletoDTO } from '../../models/perfil.model';
@@ -10,10 +10,11 @@ import {
   ResumoInvestimentoDTO,
   TipoInvestimentoDTO,
 } from '../../models/investimento.model';
+import { NavbarComponent } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-investimento',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './investimento.html',
   styleUrl: './investimento.css',
 })
@@ -188,6 +189,19 @@ export class Investimento implements OnInit {
 
   ativos(): InvestimentoDTO[] {
     return this.investimentos.filter(i => i.status === 'ATIVA');
+  }
+
+  get fotoUrlCompleta(): string {
+    const foto = this.perfil?.cliente?.fotoUrl;
+    if (!foto) {
+      return 'avatar-padrao.svg';
+    }
+    return foto.startsWith('http') ? foto : 'http://localhost:8080' + foto;
+  }
+
+  onImagemErro(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'avatar-padrao.svg';
   }
 
   logout(): void {

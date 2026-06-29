@@ -16,32 +16,6 @@
   font-family: Inter, system-ui, sans-serif;
 }
 
-/* ========== NAVBAR ========== */
-.navbar-modern {
-  backdrop-filter: blur(14px);
-  background: rgba(255,255,255,0.75);
-  border-bottom: 1px solid rgba(180,200,255,0.4);
-  position: sticky; top: 0; z-index: 100;
-}
-.nav-inner {
-  max-width: 900px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.85rem 1.5rem;
-}
-.nav-brand {
-  font-size: 1.5rem; font-weight: 800; color: var(--primary);
-  text-decoration: none; letter-spacing: -0.5px;
-}
-.nav-right { display: flex; align-items: center; gap: 1rem; }
-.nav-greeting { font-size: 0.9rem; font-weight: 600; color: var(--dark); }
-.btn-logout {
-  background: none; border: 1.5px solid #dc3545;
-  color: #dc3545; font-size: 0.82rem; font-weight: 600;
-  padding: 0.3rem 0.9rem; border-radius: 50px; cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-logout:hover { background: #dc3545; color: #fff; }
-
 /* ========== PAGE HEADER ========== */
 .page-header {
   background: linear-gradient(135deg, var(--dark), #1a4a9a);
