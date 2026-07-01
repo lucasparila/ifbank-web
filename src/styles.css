@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+.ifb-navbar {
+  background: radial-gradient(circle at top, #1a6dff, #001b4d);
+  padding: 16px 0;
+  box-shadow: 0 4px 20px #0d6efd33;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ifb-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 19px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+}
+
+.ifb-navbar-icon { font-size: 20px; }
+
+.ifb-navbar-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ifb-navbar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.2s, color 0.2s;
+}
+
+.ifb-navbar-back:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+.ifb-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ifb-navbar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.ifb-navbar-back i { font-size: 16px; }

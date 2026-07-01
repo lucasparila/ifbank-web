@@ -1,136 +1,229 @@
-<p>Teste</p>
 @if(carregando === true) {
-    <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">A carregar...</span>
+  <div class="ifb-loading-screen">
+    <div class="ifb-loading-content">
+      <div class="ifb-loading-logo">🏦</div>
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+      <span class="ifb-loading-text">Acessando os cofres do IFBank...</span>
+    </div>
   </div>
-  <span class="ms-3 h5 text-muted mb-0">Acessando os cofres do IFBank...</span>
-</div>
 }
 
 @if(carregando === false && !erroMensagem) {
-    <div class="bg-light min-vh-100">
+<div class="ifb-dashboard">
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-primary fs-4" routerLink="/home">IFBank</a>
-      
-      <div class="d-flex align-items-center gap-3 ms-auto">
-        <span class="text-white small d-none d-sm-inline">Olá, <strong class="text-primary">{{ perfil.cliente.nome }}</strong></span>
-        
-        <img [src]="perfil.cliente.fotoUrl ? 'http://localhost:8080' + perfil.cliente.fotoUrl : 'assets/avatar-padrao.png'"
-             alt="Foto de Perfil" 
-             class="rounded-circle border border-2 border-primary" 
-             style="width: 40px; height: 40px; object-fit: cover;">
-             
-        <button (click)="logout()" class="btn btn-outline-danger btn-sm border-0">
-          <i class="bi bi-box-arrow-right fs-5"></i>
+  <!-- ─── NAVBAR ─── -->
+  <nav class="ifb-navbar">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="ifb-navbar-brand" routerLink="/home">
+        <span class="ifb-navbar-icon">🏦</span>
+        <span>IFBank</span>
+        <span class="ifb-navbar-sub">· Banco Digital</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="ifb-navbar-user d-none d-sm-flex flex-column align-items-end">
+          <span class="ifb-gerente-name">{{ perfil.cliente.nome }}</span>
+          <span class="ifb-gerente-email">Conta Corrente · {{ perfil.conta?.numeroConta }}</span>
+        </div>
+
+        <img [src]="fotoUrlCompleta"
+          (error)="onImagemErro($event)"
+          alt="Foto de Perfil"
+          class="ifb-navbar-avatar"
+          routerLink="/perfil"
+          style="cursor: pointer;">
+
+        <button (click)="logout()" class="ifb-navbar-logout" title="Sair">
+          <i class="bi bi-box-arrow-right"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <div class="container my-5">
-    
-    <div class="row mb-5" *ngIf="perfil.conta">
-      <div class="col-12">
-        <div class="card border-0 bg-dark text-white shadow rounded-4 p-4 position-relative overflow-hidden">
-          <div class="card-body py-3 position-relative z-1">
-            <span class="text-secondary small text-uppercase fw-semibold tracking-wider">Saldo em Conta Corrente</span>
-            <h2 class="display-5 fw-bold text-primary my-2">{{ perfil.conta.saldo | currency:'BRL':'symbol':'1.2-2' }}</h2>
-            <div class="d-flex gap-4 mt-3 pt-2 border-top border-secondary text-secondary small">
-              <div>Agência: <strong>0001</strong></div>
-              <div>Conta: <strong>{{ perfil.conta.numeroConta }}</strong></div>
+  <div class="container ifb-dashboard-content">
+
+    <!-- ─── SAUDAÇÃO ─── -->
+    <div class="ifb-greeting-row mb-4">
+      <div>
+        <h4 class="ifb-page-title">Olá, {{ perfil.cliente.nome.split(' ')[0] }} 👋</h4>
+        <p class="ifb-page-subtitle">Aqui está um resumo da sua conta hoje.</p>
+      </div>
+    </div>
+
+    <!-- ─── HERO: SALDO + DADOS ─── -->
+    <div class="row g-4 mb-4" *ngIf="perfil.conta">
+
+      <!-- Cartão de saldo principal -->
+      <div class="col-12 col-lg-7">
+        <div class="ifb-balance-card">
+          <div class="ifb-balance-glow"></div>
+          <div class="ifb-balance-glow-2"></div>
+
+          <div class="ifb-balance-eyebrow">Saldo disponível</div>
+          <h2 class="ifb-balance-value">
+            {{ perfil.conta.saldo | currency:'BRL':'symbol':'1.2-2' }}
+          </h2>
+          <p class="ifb-balance-sub">Conta Corrente</p>
+
+          <div class="ifb-balance-divider-h"></div>
+
+          <div class="ifb-balance-footer">
+            <div class="ifb-balance-info">
+              <span class="ifb-balance-info-label">Agência</span>
+              <span class="ifb-balance-info-value">0001</span>
+            </div>
+            <div class="ifb-balance-vline"></div>
+            <div class="ifb-balance-info">
+              <span class="ifb-balance-info-label">Conta</span>
+              <span class="ifb-balance-info-value">{{ perfil.conta.numeroConta }}</span>
+            </div>
+            <div class="ifb-balance-vline"></div>
+            <div class="ifb-balance-info">
+              <span class="ifb-balance-info-label">Titular</span>
+              <span class="ifb-balance-info-value">{{ perfil.cliente.nome }}</span>
             </div>
           </div>
-          <div class="position-absolute end-0 bottom-0 opacity-10 text-primary" style="transform: translate(10%, 30%); font-size: 12rem;">
-            <i class="bi bi-wallet2"></i>
+
+          <div class="ifb-balance-watermark">
+            <i class="bi bi-bank"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ações rápidas laterais -->
+      <div class="col-12 col-lg-5">
+        <div class="ifb-actions-panel">
+          <span class="ifb-actions-label">Ações rápidas</span>
+          <div class="ifb-actions-grid">
+            <a routerLink="/deposito" class="ifb-action-btn">
+              <div class="ifb-action-icon ifb-icon-blue">
+                <i class="bi bi-plus-circle-fill"></i>
+              </div>
+              <span class="ifb-action-text">Depositar</span>
+              <i class="bi bi-chevron-right ifb-action-arrow"></i>
+            </a>
+            <a routerLink="/saque" class="ifb-action-btn">
+              <div class="ifb-action-icon ifb-icon-red">
+                <i class="bi bi-dash-circle-fill"></i>
+              </div>
+              <span class="ifb-action-text">Sacar</span>
+              <i class="bi bi-chevron-right ifb-action-arrow"></i>
+            </a>
+            <a routerLink="/transferencia" class="ifb-action-btn ifb-action-btn-highlight">
+              <div class="ifb-action-icon ifb-icon-white">
+                <i class="bi bi-send-fill"></i>
+              </div>
+              <span class="ifb-action-text">Transferir</span>
+              <i class="bi bi-chevron-right ifb-action-arrow"></i>
+            </a>
+            <a routerLink="/extrato" class="ifb-action-btn">
+              <div class="ifb-action-icon ifb-icon-cyan">
+                <i class="bi bi-file-earmark-text-fill"></i>
+              </div>
+              <span class="ifb-action-text">Extrato</span>
+              <i class="bi bi-chevron-right ifb-action-arrow"></i>
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <h4 class="text-dark fw-bold mb-4">Serviços e Funcionalidades</h4>
-    
-    <div class="row g-4">
-      
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <a routerLink="/deposito" class="card h-100 text-center text-decoration-none shadow-sm border-0 py-4 functional-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <div class="icon-box bg-primary-subtle text-primary mb-3">
-              <i class="bi bi-cash-coin fs-3"></i>
-            </div>
-            <h6 class="card-title text-dark fw-semibold mb-0 small">Depósito</h6>
+    <!-- ─── SERVIÇOS ─── -->
+    <div class="ifb-section-header mb-3">
+      <h4 class="ifb-section-title">Serviços e Funcionalidades</h4>
+      <span class="ifb-section-count">6 serviços</span>
+    </div>
+
+    <div class="row g-3 mb-5">
+
+      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+        <a routerLink="/deposito" class="ifb-service-card">
+          <div class="ifb-service-icon ifb-icon-blue">
+            <i class="bi bi-cash-coin"></i>
           </div>
+          <h6 class="ifb-service-title">Depósito</h6>
+          <span class="ifb-service-desc">Adicione fundos</span>
+          <span class="ifb-service-badge">Instantâneo</span>
         </a>
       </div>
 
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <a routerLink="/saque" class="card h-100 text-center text-decoration-none shadow-sm border-0 py-4 functional-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <div class="icon-box bg-danger-subtle text-danger mb-3">
-              <i class="bi bi-cash-stack fs-3"></i>
-            </div>
-            <h6 class="card-title text-dark fw-semibold mb-0 small">Saque</h6>
+      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+        <a routerLink="/saque" class="ifb-service-card">
+          <div class="ifb-service-icon ifb-icon-red">
+            <i class="bi bi-cash-stack"></i>
           </div>
+          <h6 class="ifb-service-title">Saque</h6>
+          <span class="ifb-service-desc">Retire seu dinheiro</span>
+          <span class="ifb-service-badge ifb-badge-red">Sem taxa</span>
         </a>
       </div>
 
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <a routerLink="/transferencia" class="card h-100 text-center text-decoration-none shadow-sm border-0 py-4 functional-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <div class="icon-box bg-success-subtle text-success mb-3">
-              <i class="bi bi-send-fill fs-3"></i>
-            </div>
-            <h6 class="card-title text-dark fw-semibold mb-0 small">Transferência</h6>
+      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+        <a routerLink="/transferencia" class="ifb-service-card">
+          <div class="ifb-service-icon ifb-icon-green">
+            <i class="bi bi-send-fill"></i>
           </div>
+          <h6 class="ifb-service-title">Transferência</h6>
+          <span class="ifb-service-desc">Envie para contas</span>
+          <span class="ifb-service-badge ifb-badge-green">Gratuita</span>
         </a>
       </div>
 
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <a routerLink="/extrato" class="card h-100 text-center text-decoration-none shadow-sm border-0 py-4 functional-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <div class="icon-box bg-info-subtle text-info mb-3">
-              <i class="bi bi-file-earmark-text fs-3"></i>
-            </div>
-            <h6 class="card-title text-dark fw-semibold mb-0 small">Extrato</h6>
+      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+        <a routerLink="/extrato" class="ifb-service-card">
+          <div class="ifb-service-icon ifb-icon-cyan">
+            <i class="bi bi-file-earmark-text"></i>
           </div>
+          <h6 class="ifb-service-title">Extrato</h6>
+          <span class="ifb-service-desc">Histórico completo</span>
+          <span class="ifb-service-badge ifb-badge-cyan">Detalhado</span>
         </a>
       </div>
 
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <a routerLink="/investimento" class="card h-100 text-center text-decoration-none shadow-sm border-0 py-4 functional-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <div class="icon-box bg-success-subtle text-success mb-3">
-              <i class="bi bi-graph-up-arrow fs-3"></i>
-            </div>
-            <h6 class="card-title text-dark fw-semibold mb-0 small">Investimento</h6>
+      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+        <a routerLink="/investimento" class="ifb-service-card">
+          <div class="ifb-service-icon ifb-icon-emerald">
+            <i class="bi bi-graph-up-arrow"></i>
           </div>
+          <h6 class="ifb-service-title">Investimentos</h6>
+          <span class="ifb-service-desc">Faça render</span>
+          <span class="ifb-service-badge ifb-badge-emerald">+CDI</span>
         </a>
       </div>
 
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <a routerLink="/emprestimo" class="card h-100 text-center text-decoration-none shadow-sm border-0 py-4 functional-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <div class="icon-box bg-warning-subtle text-warning mb-3">
-              <i class="bi bi-bank fs-3"></i>
-            </div>
-            <h6 class="card-title text-dark fw-semibold mb-0 small">Empréstimo</h6>
+      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+        <a routerLink="/perfil" class="ifb-service-card">
+          <div class="ifb-service-icon ifb-icon-gray">
+            <i class="bi bi-person-gear"></i>
           </div>
+          <h6 class="ifb-service-title">Meu Perfil</h6>
+          <span class="ifb-service-desc">Gerencie seus dados</span>
+          <span class="ifb-service-badge ifb-badge-gray">Configurações</span>
         </a>
       </div>
 
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <a routerLink="/perfil" class="card h-100 text-center text-decoration-none shadow-sm border-0 py-4 functional-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <div class="icon-box bg-secondary-subtle text-secondary mb-3">
-              <i class="bi bi-person-gear fs-3"></i>
-            </div>
-            <h6 class="card-title text-dark fw-semibold mb-0 small">Meu Perfil</h6>
-          </div>
-        </a>
-      </div>
+    </div>
 
-    </div> </div>
+    <!-- ─── SEGURANÇA / INFO BAR ─── -->
+    <div class="ifb-info-bar">
+      <div class="ifb-info-item">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>Conexão criptografada</span>
+      </div>
+      <div class="ifb-info-divider"></div>
+      <div class="ifb-info-item">
+        <i class="bi bi-clock-fill"></i>
+        <span>Disponível 24/7</span>
+      </div>
+      <div class="ifb-info-divider"></div>
+      <div class="ifb-info-item">
+        <i class="bi bi-patch-check-fill"></i>
+        <span>Banco Digital IFSP</span>
+      </div>
+    </div>
+
+  </div>
 </div>
 }

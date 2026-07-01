@@ -1,0 +1,354 @@
+/* ════════════════════ NAVBAR GERENTE ════════════════════ */
+
+.ifb-gerente-navbar {
+  background: radial-gradient(circle at top, #1a6dff, #001b4d);
+  padding: 16px 0;
+  box-shadow: 0 4px 20px #0d6efd33;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ifb-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 19px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+}
+
+.ifb-navbar-icon { font-size: 20px; }
+
+.ifb-navbar-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ifb-gerente-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  display: block;
+}
+
+.ifb-gerente-email {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+}
+
+.ifb-badge-gerencia {
+  background: #dc354522;
+  border: 1px solid #dc354555;
+  color: #ff8a8a;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.ifb-navbar-logout {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ff8a8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ifb-navbar-logout:hover {
+  background: rgba(255, 80, 80, 0.2);
+}
+
+/* ════════════════════ WRAPPER ════════════════════ */
+
+.ifb-gerente-wrapper {
+  min-height: 100vh;
+  background: #f5f7fc;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.ifb-gerente-content {
+  padding-top: 36px;
+  padding-bottom: 48px;
+}
+
+.ifb-page-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0a2a57;
+  margin-bottom: 4px;
+}
+
+.ifb-page-subtitle {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+/* ════════════════════ ALERTS ════════════════════ */
+
+.ifb-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.ifb-alert-success {
+  background: #e8f9f0;
+  border: 1px solid #b8e6cd;
+  color: #0f6d3c;
+}
+
+.ifb-alert-danger {
+  background: #fff1f1;
+  border: 1px solid #f5c2c7;
+  color: #842029;
+}
+
+/* ════════════════════ LOADING / EMPTY ════════════════════ */
+
+.ifb-loading-inline {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.ifb-loading-inline p {
+  color: #8b93a7;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.ifb-empty-state {
+  background: white;
+  border: 1px solid #e7ebf7;
+  border-radius: 22px;
+  text-align: center;
+  padding: 56px 24px;
+}
+
+.ifb-empty-state i {
+  font-size: 56px;
+  color: #198754;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.ifb-empty-state h5 {
+  font-weight: 800;
+  color: #0a2a57;
+  margin-bottom: 6px;
+}
+
+.ifb-empty-state p {
+  color: #8b93a7;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+/* ════════════════════ TABELA ════════════════════ */
+
+.ifb-table-card {
+  background: white;
+  border: 1px solid #e7ebf7;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px #0d6efd0f;
+}
+
+.ifb-table-card table {
+  margin-bottom: 0;
+}
+
+.ifb-table-card thead {
+  background: #f5f7fc;
+}
+
+.ifb-table-card thead th {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7b8094;
+  border-bottom: 1px solid #e7ebf7;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.ifb-table-card tbody tr {
+  border-bottom: 1px solid #f0f2f9;
+}
+
+.ifb-table-card tbody tr:hover {
+  background: #f8faff;
+}
+
+.ifb-table-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e7ebf7;
+}
+
+.ifb-table-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a2a57;
+  display: block;
+}
+
+.ifb-table-date {
+  font-size: 11px;
+  color: #adb5bd;
+  display: block;
+}
+
+.ifb-table-cpf {
+  font-size: 13px;
+  font-weight: 600;
+  color: #495057;
+  display: block;
+}
+
+.ifb-table-email {
+  font-size: 12px;
+  color: #adb5bd;
+  display: block;
+}
+
+.ifb-table-location {
+  font-size: 13px;
+  color: #495057;
+}
+
+.ifb-table-conta {
+  color: #0d6efd;
+  font-weight: 700;
+  background: #0d6efd12;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.ifb-btn-approve {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #198754;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px #19875433;
+  transition: filter 0.2s, transform 0.15s;
+}
+
+.ifb-btn-approve:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.ifb-btn-reject {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #b41515;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px #19875433;
+  transition: filter 0.2s, transform 0.15s;
+}
+
+.ifb-btn-reject:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* ════════════════════ ABAS ════════════════════ */
+
+.ifb-tabs {
+  border-bottom: 2px solid #e7ebf7;
+}
+
+.ifb-tabs .nav-link {
+  border: none;
+  background: transparent;
+  color: #7b8094;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 0;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.ifb-tabs .nav-link:hover {
+  color: #0a2a57;
+}
+
+.ifb-tabs .nav-link.active {
+  color: #0d6efd;
+  border-bottom: 3px solid #0d6efd;
+}
+
+/* ════════════════════ PAGINAÇÃO ════════════════════ */
+
+.ifb-pagination {
+  border-top: 1px solid #f0f2f9;
+  background: #fafbfe;
+}
+
+.ifb-pagination-info {
+  font-size: 13px;
+  color: #7b8094;
+}
+
+.ifb-btn-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid #e7ebf7;
+  color: #0a2a57;
+  border-radius: 10px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ifb-btn-page:hover:not(:disabled) {
+  background: #f5f7fc;
+}
+
+.ifb-btn-page:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+

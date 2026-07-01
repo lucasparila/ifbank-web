@@ -74,26 +74,75 @@
             <div class="row mb-3">
               <div class="col-md-6">
                 <label class="form-label">CPF</label>
-                <input type="text" class="form-control" name="cpf" [(ngModel)]="formCadastro.cpf"
-                  placeholder="000.000.000-00" required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="cpf"
+                  [(ngModel)]="formCadastro.cpf"
+                  (input)="aplicarMascaraCpf($event)"
+                  placeholder="000.000.000-00"
+                  maxlength="14"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
               <div class="col-md-6">
                 <label class="form-label">E-mail</label>
-                <input type="email" class="form-control" name="email" [(ngModel)]="formCadastro.email"
-                  placeholder="exemplo@ifbank.com" required [disabled]="carregando">
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  [(ngModel)]="formCadastro.email"
+                  placeholder="exemplo@email.com"
+                  autocomplete="email"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
             </div>
 
             <div class="row mb-3">
               <div class="col-md-6">
                 <label class="form-label">Senha</label>
-                <input type="password" class="form-control" name="senha" [(ngModel)]="formCadastro.senha"
-                  placeholder="Mínimo 6 caracteres" required [disabled]="carregando">
+                <input
+                  type="password"
+                  class="form-control"
+                  name="senha"
+                  [(ngModel)]="formCadastro.senha"
+                  placeholder="Mínimo 6 caracteres"
+                  autocomplete="new-password"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
               <div class="col-md-6">
-                <label class="form-label">Foto de Perfil <span class="text-muted small">(opcional)</span></label>
-                <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event)"
-                  [disabled]="carregando">
+                <label class="form-label">Confirmar Senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  [class.input-mismatch]="formCadastro.senhaConfirmacao && formCadastro.senha !== formCadastro.senhaConfirmacao"
+                  name="senhaConfirmacao"
+                  [(ngModel)]="formCadastro.senhaConfirmacao"
+                  placeholder="Repita a senha"
+                  autocomplete="new-password"
+                  required
+                  [attr.disabled]="carregando || null">
+                <span
+                  *ngIf="formCadastro.senhaConfirmacao && formCadastro.senha !== formCadastro.senhaConfirmacao"
+                  class="field-hint hint-error">
+                  As senhas não coincidem
+                </span>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Foto de Perfil <span class="text-muted small">(opcional, máx. 5MB)</span></label>
+                <input
+                  type="file"
+                  class="form-control"
+                  accept="image/*"
+                  (change)="onFileSelected($event)"
+                  [attr.disabled]="carregando || null">
               </div>
             </div>
 
@@ -104,14 +153,29 @@
             <div class="row mb-3">
               <div class="col-md-8">
                 <label class="form-label">Nome completo</label>
-                <input type="text" class="form-control" name="nome" [(ngModel)]="formCadastro.nome"
-                  required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="nome"
+                  [(ngModel)]="formCadastro.nome"
+                  placeholder="Como consta no seu documento"
+                  autocomplete="name"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
               <div class="col-md-4">
                 <label class="form-label">Data de nascimento</label>
-                <input type="text" class="form-control" name="dataNascimento"
-                  [(ngModel)]="formCadastro.dataNascimento" placeholder="dd/mm/aaaa"
-                  required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="dataNascimento"
+                  [(ngModel)]="formCadastro.dataNascimento"
+                  (input)="aplicarMascaraData($event)"
+                  placeholder="dd/mm/aaaa"
+                  maxlength="10"
+                  inputmode="numeric"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
             </div>
 
@@ -120,21 +184,42 @@
             <div class="section-divider"></div>
 
             <div class="row mb-3">
-              <div class="col-md-3">
-                <label class="form-label">Cód. País</label>
-                <input type="number" class="form-control" name="codPais" [(ngModel)]="formCadastro.codPais"
-                  [disabled]="carregando">
+              <div class="col-md-2">
+                <label class="form-label">País</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="+55"
+                  disabled
+                  aria-label="Código do país fixo: Brasil +55">
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <label class="form-label">DDD</label>
-                <input type="number" class="form-control" name="codArea" [(ngModel)]="formCadastro.codArea"
-                  placeholder="Ex: 16" required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="codArea"
+                  [(ngModel)]="formCadastro.codArea"
+                  (input)="aplicarMascaraDdd($event)"
+                  placeholder="16"
+                  maxlength="2"
+                  inputmode="numeric"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <label class="form-label">Número</label>
-                <input type="number" class="form-control" name="numeroTelefone"
-                  [(ngModel)]="formCadastro.numeroTelefone" placeholder="Ex: 999999999"
-                  required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="numeroTelefone"
+                  [(ngModel)]="formCadastro.numeroTelefone"
+                  (input)="aplicarMascaraTelefone($event)"
+                  placeholder="99999-9999"
+                  maxlength="10"
+                  inputmode="numeric"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
             </div>
 
@@ -144,53 +229,105 @@
 
             <div class="row mb-3">
               <div class="col-md-4">
-                <label class="form-label">CEP</label>
-                <input type="text" class="form-control" name="cep" [(ngModel)]="formCadastro.cep"
-                  placeholder="00000-000" required [disabled]="carregando">
+                <label class="form-label">
+                  CEP
+                  <span *ngIf="buscandoCep" class="spinner-border spinner-border-sm ms-1" role="status"></span>
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="cep"
+                  [(ngModel)]="formCadastro.cep"
+                  (input)="aplicarMascaraCep($event)"
+                  placeholder="00000-000"
+                  maxlength="9"
+                  inputmode="numeric"
+                  required
+                  [attr.disabled]="carregando || null">
+                <span class="field-hint">Preenchimento automático do endereço</span>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Logradouro</label>
-                <input type="text" class="form-control" name="logradouro" [(ngModel)]="formCadastro.logradouro"
-                  required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="logradouro"
+                  [(ngModel)]="formCadastro.logradouro"
+                  placeholder="Rua, Av., Alameda..."
+                  required
+                  [attr.disabled]="carregando || buscandoCep || null">
               </div>
               <div class="col-md-2">
                 <label class="form-label">Nº</label>
-                <input type="number" class="form-control" name="numero" [(ngModel)]="formCadastro.numero"
-                  required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="numero"
+                  [(ngModel)]="formCadastro.numero"
+                  placeholder="123"
+                  inputmode="numeric"
+                  required
+                  [attr.disabled]="carregando || null">
               </div>
             </div>
 
             <div class="row mb-3">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="form-label">Complemento</label>
-                <input type="text" class="form-control" name="complemento" [(ngModel)]="formCadastro.complemento"
-                  placeholder="Apt, Bloco..." [disabled]="carregando">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Bairro</label>
-                <input type="text" class="form-control" name="bairro" [(ngModel)]="formCadastro.bairro"
-                  required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="complemento"
+                  [(ngModel)]="formCadastro.complemento"
+                  placeholder="Apt, Bloco, Casa..."
+                  [attr.disabled]="carregando || null">
               </div>
               <div class="col-md-3">
-                <label class="form-label">Cidade</label>
-                <input type="text" class="form-control" name="cidade" [(ngModel)]="formCadastro.cidade"
-                  required [disabled]="carregando">
+                <label class="form-label">Bairro</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="bairro"
+                  [(ngModel)]="formCadastro.bairro"
+                  required
+                  [attr.disabled]="carregando || buscandoCep || null">
               </div>
-              <div class="col-md-1">
+              <div class="col-md-4">
+                <label class="form-label">Cidade</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="cidade"
+                  [(ngModel)]="formCadastro.cidade"
+                  required
+                  [attr.disabled]="carregando || buscandoCep || null">
+              </div>
+              <div class="col-md-2">
                 <label class="form-label">UF</label>
-                <input type="text" class="form-control" name="estado" [(ngModel)]="formCadastro.estado"
-                  maxlength="2" placeholder="SP" required [disabled]="carregando">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="estado"
+                  [(ngModel)]="formCadastro.estado"
+                  (input)="aplicarUppercaseUf($event)"
+                  maxlength="2"
+                  placeholder="SP"
+                  required
+                  [attr.disabled]="carregando || buscandoCep || null">
               </div>
             </div>
 
             <!-- BOTÕES -->
             <div class="form-actions">
-              <button type="button" class="btn-cancelar" routerLink="/login" [disabled]="carregando">
+              <button type="button" class="btn-cancelar" routerLink="/login" [attr.disabled]="carregando || null">
                 Voltar para login
               </button>
               <button type="submit" class="btn-cadastrar" [disabled]="carregando">
                 <span *ngIf="!carregando">Criar minha conta</span>
-                <span *ngIf="carregando" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span *ngIf="carregando" class="btn-loading">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Criando conta...
+                </span>
               </button>
             </div>
 

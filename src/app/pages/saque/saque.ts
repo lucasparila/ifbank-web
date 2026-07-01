@@ -5,10 +5,11 @@ import { Router, RouterLink } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { MovimentacaoService } from '../../services/movimentacao.service';
 import { PerfilCompletoDTO } from '../../models/perfil.model';
+import { NavbarComponent } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-saque',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
   templateUrl: './saque.html',
   styleUrl: './saque.css',
 })

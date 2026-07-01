@@ -9,6 +9,10 @@ import { Investimento } from './pages/investimento/investimento';
 import { Deposito } from './pages/deposito/deposito';
 import { Saque } from './pages/saque/saque';
 import { Transferencia } from './pages/transferencia/transferencia';
+import { Extrato } from './pages/extrato/extrato';
+import { EsqueciSenha } from './pages/esqueci-senha/esqueci-senha';
+import { ResetarSenha } from './pages/resetar-senha/resetar-senha';
+import { NavbarComponent } from './components/navbar/navbar';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -21,7 +25,11 @@ export const routes: Routes = [
   { path: 'dashboard-gerente', component: DashboardGerente },
   { path: 'deposito', component: Deposito },
   { path: 'saque', component: Saque },
-  { path: 'transferencia', component: Transferencia }, 
-  
+  { path: 'transferencia', component: Transferencia },
+  { path: 'extrato', component: Extrato },
+  { path: 'esqueci-senha', component: EsqueciSenha },
+  { path: 'resetar-senha', component: ResetarSenha },
+  { path: 'app-navbar', component: NavbarComponent },
+
   { path: '**', redirectTo: '' }
 ];

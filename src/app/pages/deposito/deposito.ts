@@ -5,10 +5,11 @@ import { Router, RouterLink } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { MovimentacaoService } from '../../services/movimentacao.service';
 import { PerfilCompletoDTO } from '../../models/perfil.model';
+import { NavbarComponent } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-deposito',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
   templateUrl: './deposito.html',
   styleUrl: './deposito.css',
 })
