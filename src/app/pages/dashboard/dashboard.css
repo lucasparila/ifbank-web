@@ -168,6 +168,29 @@
   box-shadow: 0 0 8px #198754aa;
 }
 
+/* ════════════════════ BADGE PILL STATUS ════════════════════ */
+
+.ifb-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 999px;
+  text-transform: capitalize;
+}
+
+.ifb-pill-green  { background: #e8f9f0; border: 1px solid #b8e6cd; color: #0f6d3c; }
+.ifb-pill-yellow { background: #fff8e1; border: 1px solid #f6d860; color: #92680a; }
+.ifb-pill-red    { background: #fdecea; border: 1px solid #f5c2c7; color: #a0222e; }
+.ifb-pill-gray   { background: #f3f4f6; border: 1px solid #d1d5db; color: #4b5563; }
+
+.dot-green  { background: #198754; box-shadow: 0 0 8px #19875499; }
+.dot-yellow { background: #f59e0b; box-shadow: 0 0 8px #f59e0b99; }
+.dot-red    { background: #dc3545; box-shadow: 0 0 8px #dc354599; }
+.dot-gray   { background: #9ca3af; box-shadow: 0 0 8px #9ca3af99; }
+
 /* ════════════════════ CARTÃO DE SALDO ════════════════════ */
 
 .ifb-balance-card {
